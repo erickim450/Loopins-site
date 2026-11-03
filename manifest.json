@@ -2,7 +2,7 @@
   {
     "file": "index.html",
     "bytes": 22559,
-    "sha256": "50c7bbb03fa347ef91b5d616c0f29fd342afc42788d668350c70cb63f53b76cc"
+    "sha256": "289064753a47973bacca7fbe82b995a0e7ef7dd70309b3d0473e2f3fe8e0340d"
   },
   {
     "file": "manifest.webmanifest",
@@ -16,8 +16,8 @@
   },
   {
     "file": "styles.css",
-    "bytes": 77282,
-    "sha256": "c731bdeac53443c549f4006c2f840b0459d442d7e4274844a423381224453004"
+    "bytes": 77434,
+    "sha256": "83bb7d3f9eae7c1a78bad4ab33842fb13cbcdb7cc6ed0d997476b1bd5e3567e6"
   },
   {
     "file": "catalog-facts.js",
