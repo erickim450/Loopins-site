@@ -23,6 +23,7 @@ function toggleTheme(){
 
 /* ── Novidades do próprio Loopins (sem notícias sobre ferramentas externas) ── */
 const news=[
+ {version:'5.7',date:'03/11/2026',items:['Céu da alcateia no topo: aurora em movimento, lua, estrelas cadentes e um lobo feito de estrelas uivando para a lua.','Faixa com todas as IAs do catálogo passando abaixo da busca.']},
  {version:'5.6',date:'03/11/2026',items:['Monte sua alcateia: projetos grandes viram uma alcateia de IAs, cada uma com um papel, correndo em formação.','Lobo guia: um mascote que fica atento quando você digita, uiva quando encontra IAs e dá dicas.','Sons gerados no navegador: trilha e uivo na abertura, uivo do lobo guia; liga e desliga em Meu espaço.']},
  {version:'5.5',date:'03/11/2026',items:['O site agora se chama Loopins — “alcateia de lobos”.','Novo logotipo de lobo uivando para a lua.','Na abertura do modo apresentação, as partículas formam LOOPINS e depois se transformam num lobo uivando para a lua.']},
  {version:'5.4',date:'03/11/2026',items:['Universo 3D de IAs: o catálogo como um globo 3D que gira, aceita arrastar e zoom, e mostra as 3 escolhidas flutuando para a frente.','Pesquisa por voz: fale o pedido e veja o texto e o globo reagirem enquanto você fala.','Abertura cinematográfica no modo apresentação.']},
