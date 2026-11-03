@@ -43,18 +43,18 @@ add('wordpress-ai','wordpress builder noCode publish','https://wordpress.com/pt-
 const additions=[['descript','Descript','https://www.descript.com/','audio'],['wordpress-ai','WordPress.com AI','https://wordpress.com/pt-br/construtor-de-sites-com-ia/','code'],['recraft','Recraft','https://www.recraft.ai/','image'],['claude-code','Claude Code','https://claude.com/product/claude-code','code'],['framer','Framer','https://www.framer.com/ai/','code'],['veo','Veo','https://deepmind.google/models/veo/','video']];
 for(const [id,e] of Object.entries(FACTS.entries)){
  if(e.create)additions.push([id,e.create.name,e.create.url,e.create.task,e.create]);
- for(const [key,[url,note]] of Object.entries(e.capabilities||{}))add(id,key,url,note,e.create?.kind||profiles[id]?.kind||'app',FACTS.REVIEWED,'indexed');
+ for(const [key,[url,note]] of Object.entries(e.capabilities||{}))add(id,key,url,note,e.create?.kind||profiles[id]?.kind||'app',e.reviewed||FACTS.REVIEWED,'indexed');
  if(e.specialties)specialties[id]=[...new Set([...(specialties[id]||[]),...e.specialties])];
 }
 function enrich(tools){
- for(const [id,name,url,category,meta={}] of additions)if(!tools.some(t=>t.id===id)){const e=FACTS.entries[id]||{};tools.push({id,name,owner:meta.owner||name,initial:name[0],colors:['#8974ff','#328c92'],url,source:url,ranks:{[category]:1},best:{[category]:e.description||'Consulte as competências verificadas.'},pros:[e.description||'Finalidade documentada em fonte oficial'],cons:[...(e.limitations||[]),'Confira plano, região, créditos e condições no serviço.'],access:'unknown',platforms:[...(meta.platforms||[])],offline:!!meta.offline,productType:meta.productType||'não verificado',account:'não verificado',integration:'link externo',tasks:[category]});}
+ for(const [id,name,url,category,meta={}] of additions)if(!tools.some(t=>t.id===id)){const e=FACTS.entries[id]||{};tools.push({id,name,owner:meta.owner||name,initial:name[0],colors:meta.colors||['#8974ff','#328c92'],url,source:url,ranks:{[category]:1},best:{[category]:e.description||'Consulte as competências verificadas.'},pros:[e.description||'Finalidade documentada em fonte oficial'],cons:[...(e.limitations||[]),'Confira plano, região, créditos e condições no serviço.'],access:'unknown',platforms:[...(meta.platforms||[])],offline:!!meta.offline,productType:meta.productType||'não verificado',account:'não verificado',integration:'link externo',tasks:[category]});}
  for(const t of tools){const p=profiles[t.id];t.specialties=specialties[t.id]||[];t.schemaVersion=4;t.kind=p?.kind||'app';t.capabilities=Object.fromEntries(Object.keys(labels).map(k=>[k,p?.capabilities[k]||{status:'unknown',source:null,reviewedAt:null,note:'Não verificado; não significa ausência do recurso.'}]));
  const e=FACTS.entries[t.id]||{};
  t.freeCapabilities=[...new Set([...(({lovable:['builder','noCode','fullStack','publish'],suno:['music'],adobepodcast:['audioClean'],gamma:['presentation']})[t.id]||[]),...(e.free||[])])];
  if(e.access)t.access=e.access;else if(e.plan&&['free','freemium','paid'].includes(e.plan.status)&&t.access==='unknown')t.access=e.plan.status;
  t.accessDetails={app:{status:t.access,source:t.reviewedAt?t.source:null,reviewedAt:t.reviewedAt||null},api:{status:'unknown',source:null,reviewedAt:null}};
- if(e.plan)t.accessDetails.app={status:e.plan.status,source:e.plan.source,reviewedAt:FACTS.REVIEWED,note:e.plan.note};
- if(e.api)t.accessDetails.api={status:e.api.status,source:e.api.source,reviewedAt:FACTS.REVIEWED,note:e.api.note};
+ if(e.plan)t.accessDetails.app={status:e.plan.status,source:e.plan.source,reviewedAt:e.reviewed||FACTS.REVIEWED,note:e.plan.note};
+ if(e.api)t.accessDetails.api={status:e.api.status,source:e.api.source,reviewedAt:e.reviewed||FACTS.REVIEWED,note:e.api.note};
  t.facts={description:e.description||Object.values(t.best)[0]||'',technicalLevel:FACTS.technical[t.id]||'não avaliado',technicalBasis:'editorial',limitations:e.limitations||[],openSource:e.openSource??null,local:e.local??(t.offline||null),unsupportedLanguages:e.unsupportedLanguages||[],languages:e.languages||[],languageSource:e.languageSource||null};
  if(e.rename)t.name=e.rename;
  if(t.id==='lovable'){t.access='freemium';t.accessDetails.app={status:'freemium',source:'https://lovable.dev/pricing',reviewedAt:'2026-10-24'};}
@@ -66,7 +66,7 @@ function enrich(tools){
  return tools;
 }
 function audit(tools){const errors=[],seen=new Set();for(const t of tools){if(seen.has(t.id))errors.push(t.id+': ID duplicado');seen.add(t.id);if(!/^[a-z0-9-]+$/.test(t.id)||!t.name||!/^https:\/\//.test(t.url))errors.push(t.id+': identidade/URL');if(t.schemaVersion!==4)errors.push(t.id+': schema');if(!['app','model','agent'].includes(t.kind))errors.push(t.id+': kind');for(const k of Object.keys(labels))if(!t.capabilities?.[k])errors.push(t.id+': competência ausente '+k);
- for(const [k,c] of Object.entries(t.capabilities||{})){if(!labels[k]||!['supported','unsupported','unknown'].includes(c.status))errors.push(t.id+': competência inválida '+k);if(c.status!=='unknown'&&(!/^https:\/\/[^@\s]+$/.test(c.source||'')||!Number.isFinite(Date.parse(c.reviewedAt))||c.reviewedAt>FACTS.REVIEWED))errors.push(t.id+': fonte/data ausente '+k);}
+ for(const [k,c] of Object.entries(t.capabilities||{})){if(!labels[k]||!['supported','unsupported','unknown'].includes(c.status))errors.push(t.id+': competência inválida '+k);if(c.status!=='unknown'&&(!/^https:\/\/[^@\s]+$/.test(c.source||'')||!Number.isFinite(Date.parse(c.reviewedAt))||c.reviewedAt>(FACTS.LATEST||FACTS.REVIEWED)))errors.push(t.id+': fonte/data ausente '+k);}
  }return {schemaVersion:4,tools:tools.length,errors,coverage:Object.fromEntries(Object.keys(labels).map(k=>[k,tools.filter(t=>t.capabilities?.[k]?.status==='supported').map(t=>t.id)]))};}
 return {enrich,labels,audit,facts:FACTS};
 });

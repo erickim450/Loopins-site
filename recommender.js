@@ -47,6 +47,9 @@ proofread:{family:'text',label:'revisão e correção de texto',required:['proof
 math:{family:'study',label:'matemática passo a passo',required:['math'],weights:{math:85,study:10}},
 avatar_video:{family:'video',label:'vídeo com apresentador virtual',required:['avatarVideo'],weights:{avatarVideo:85,voice:10,video:5}},
 model3d:{family:'design',label:'modelo 3D',required:['model3d'],weights:{model3d:90}},
+short_clips:{family:'video',label:'cortes curtos de um vídeo longo',required:[],anyOf:['shortClips','videoEdit'],weights:{shortClips:50,videoEdit:40,captions:20}},
+stems:{family:'audio',label:'separação de voz e instrumentos',required:['stems'],weights:{stems:90}},
+language:{family:'study',label:'aprender um idioma',required:[],anyOf:['languageLearning','study'],weights:{languageLearning:55,study:35,tutoring:15}},
 general:{family:'all',label:'objetivo amplo',required:[],weights:{text:1,study:1}}
 };
 const defaultSubtask={code:'site_builder',image:'illustration',video:'video',audio:'voice',study:'study',research:'science',presentation:'presentation',design:'design',text:'text',automation:'automation',data:'data_analysis',agents:'chatbot',all:'general'};
@@ -54,9 +57,9 @@ const refinementGroups={
 text:[['text','Escrever'],['proofread','Revisar / corrigir'],['translation','Traduzir'],['resume','Currículo']],
 code:[['site_builder','Site sem programar'],['manual_code','HTML / CSS / JS'],['fullstack','Login e banco'],['repository_fix','Editar projeto existente'],['game','Jogo'],['publish','Publicar']],
 image:[['photo','Foto de produto'],['illustration','Ilustração'],['typography','Texto na imagem'],['vector','SVG editável'],['image_edit','Editar imagem']],
-video:[['video','Gerar cena por IA'],['avatar_video','Apresentador virtual'],['screen_video','Demonstração de tela'],['video_edit','Editar / legendar vídeo'],['video_audio','Com áudio'],['image_video','Animar imagem'],['camera','Direção de câmera']],
-audio:[['voice','Narração'],['music','Música'],['transcription','Transcrição'],['audio_clean','Limpar gravação']],
-study:[['study','Explicações'],['math','Matemática passo a passo'],['science','Artigos científicos'],['web','Notícias e web'],['documents','Meus PDFs']],
+video:[['video','Gerar cena por IA'],['avatar_video','Apresentador virtual'],['screen_video','Demonstração de tela'],['video_edit','Editar / legendar vídeo'],['short_clips','Cortes curtos'],['video_audio','Com áudio'],['image_video','Animar imagem'],['camera','Direção de câmera']],
+audio:[['voice','Narração'],['music','Música'],['transcription','Transcrição'],['audio_clean','Limpar gravação'],['stems','Separar voz da música']],
+study:[['study','Explicações'],['math','Matemática passo a passo'],['science','Artigos científicos'],['web','Notícias e web'],['documents','Meus PDFs'],['language','Idiomas']],
 research:[['science','Artigos científicos'],['web','Notícias e web'],['documents','Meus PDFs']],
 presentation:[['presentation','Slides'],['diagram','Diagrama / infográfico']],
 agents:[['chatbot','Sem programar'],['software','Programar o bot']],
@@ -143,6 +146,8 @@ function parseTask(input,preferences={}){
  else if(!software&&has(/\b(?:gerar|criar|fazer|produzir) (?:uma? )?(?:narracao|voz|locucao|dublagem)\b/))subtask='voice';
  else if(software)subtask='software';
  else if(website)subtask='site_builder';
+ else if(has(/\b(karaoke|playback|separar (?:a |as |os )?(?:voz|vozes|vocal|instrumentos?|faixas|stems)|isolar (?:a |o )?(?:voz|vocal|instrumento|bateria|baixo|guitarra)|(?:remover|tirar|retirar) (?:a )?(?:voz|vocal) d[aeo])\b/))subtask='stems';
+ else if(has(/\b(aprender|estudar|praticar|treinar|falar|conversar em)\b/)&&has(/\b(ingles|espanhol|frances|alemao|italiano|japones|coreano|chines|mandarim|idioma|idiomas|lingua estrangeira|conversacao)\b/))subtask='language';
  else if(has(/\b(slides|apresentacao)\b/))subtask='presentation';
  else if(has(/\b(layout|prototipo|interface)\b/)&&has(/sem programar|visual|figma/))subtask='design';
  else if(has(/\b(video|videos|filme|clipe|cena|cinematografico|cinematografica|animar)\b/))subtask='video';
@@ -212,6 +217,14 @@ function parseTask(input,preferences={}){
   if(has(/\b(avatar|avatares|apresentador virtual|apresentadora virtual|apresentador digital|pessoa falando|talking head|dublar (?:o |meu )?video|traduzir (?:o |meu )?video)\b/))subtask='avatar_video';
   if(has(/\b(3d|tridimensional|impressao 3d|modelo 3d|objeto 3d)\b/)&&!has(/\b(jogo|jogos|game)\b/))subtask='model3d';
  }
+ // 5.8: separar voz da música, idiomas, cortes de vídeo, foto que fala e flashcards.
+ if(!software&&!codeIntent){
+  if(has(/\b(karaoke|playback|separar (?:a |as |os )?(?:voz|vozes|vocal|instrumentos?|faixas|stems)|isolar (?:a |o )?(?:voz|vocal|instrumento|bateria|baixo|guitarra)|(?:remover|tirar|retirar) (?:a )?(?:voz|vocal) d[aeo])\b/))subtask='stems';
+  if(has(/\b(aprender|estudar|praticar|treinar|falar|conversar em)\b/)&&has(/\b(ingles|espanhol|frances|alemao|italiano|japones|coreano|chines|mandarim|idioma|idiomas|lingua estrangeira|conversacao)\b/)&&!has(/\b(traduzir|traduza|traducao)\b/))subtask='language';
+  if(has(/\b(cortes?|clipes? curtos|shorts|reels)\b/)&&has(/\bvideos?\b/))subtask='short_clips';
+  if(has(/\b(?:foto|imagem|retrato) (?:\w+ ){0,3}(?:falando|falar|fale)\b/))subtask='avatar_video';
+  if(has(/\b(flashcards?|cartoes de estudo|cartoes de memoria)\b/))subtask='study';
+ }
  const originalSubtask=subtask;
  if(specs[preferences.refinement])subtask=preferences.refinement;
  const constraintText=normalize(preferences.constraintText||(typeof input==='object'?input?.constraintText:'')||'').slice(0,800);
@@ -244,7 +257,7 @@ function parseTask(input,preferences={}){
  const experience=preferences.experience&&preferences.experience!=='any'?preferences.experience:context.audience==='beginner'?'beginner':context.audience==='developer'?'advanced':'any';
  return {schemaVersion:1,originalQuery,constraintText,normalizedQuery:active,action:(active.match(/\b(criar|gerar|fazer|corrigir|editar|pesquisar|resumir|narrar|animar|programar|automatizar|analisar|transcrever|gravar|estudar|comparar|traduzir)\b/)||[])[0]||'explorar',deliverable:specs[subtask].label,taskFamily,subtask,subject:(active.match(/\b(?:de|sobre|para) (.+)$/)||[])[1]||null,style:(active.match(/\b(realista|aquarela|minimalista|cinematografico|cinematografica)\b/g)||[]),platform:preferences.platform||'any',technologies,constraints,context,corrections:fuzzy.corrections,signals:{evidence,ambiguity,negativeSignals},experience,confidence:subtask==='general'?'low':ambiguity.length?'medium':'high',secondary};
 }
-function analyzeTask(input){const t=parseTask(input);const aliases={software:'desenvolvimento',manual_code:'desenvolvimento',repository_fix:'depuracao',site_builder:'interface',landing:'interface',fullstack:'desenvolvimento',game:'desenvolvimento',science:'pesquisa',web:'pesquisa',documents:'material',typography:'tipografia',voice:'voz',music:'musica',audio_clean:'edicao_audio',study:'aprendizado',automation:'automacao',data_analysis:'dados',chatbot:'atendimento',screen_video:'video',video_edit:'video',diagram:'visual'};return {intent:aliases[t.subtask]||'geral',signals:t.signals.evidence,preferenceFree:t.constraints.freeOnly,normalized:t.normalizedQuery,isSoftware:t.taskFamily==='code',objective:extractGoal(t.originalQuery),taskIntent:t};}
+function analyzeTask(input){const t=parseTask(input);const aliases={software:'desenvolvimento',manual_code:'desenvolvimento',repository_fix:'depuracao',site_builder:'interface',landing:'interface',fullstack:'desenvolvimento',game:'desenvolvimento',science:'pesquisa',web:'pesquisa',documents:'material',typography:'tipografia',voice:'voz',music:'musica',audio_clean:'edicao_audio',stems:'edicao_audio',short_clips:'video',language:'aprendizado',study:'aprendizado',automation:'automacao',data_analysis:'dados',chatbot:'atendimento',screen_video:'video',video_edit:'video',diagram:'visual'};return {intent:aliases[t.subtask]||'geral',signals:t.signals.evidence,preferenceFree:t.constraints.freeOnly,normalized:t.normalizedQuery,isSoftware:t.taskFamily==='code',objective:extractGoal(t.originalQuery),taskIntent:t};}
 function classify(input){const t=parseTask(input);return {category:t.taskFamily,normalized:t.normalizedQuery,isSoftware:t.taskFamily==='code',scores:{[t.taskFamily]:1},taskIntent:t};}
 
 /* ── Critérios complementares do ranking (documentados em RANKING.md) ──

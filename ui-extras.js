@@ -23,6 +23,7 @@ function toggleTheme(){
 
 /* ── Novidades do próprio Loopins (sem notícias sobre ferramentas externas) ── */
 const news=[
+ {version:'5.8',date:'03/11/2026',items:['56 IAs novas, todas conferidas em páginas oficiais: agora são 127 (Moises, Duolingo Max, OpusClip, Google AI Studio, Base44, Antigravity, SciSpace, Semantic Scholar, PixVerse, Hailuo, Tripo, Meta AI, Poe e muitas outras).','Novos tipos de pedido: separar a voz de uma música, aprender um idioma e transformar vídeo longo em cortes curtos.']},
  {version:'5.7',date:'03/11/2026',items:['Céu da alcateia no topo: aurora em movimento, lua, estrelas cadentes e um lobo feito de estrelas uivando para a lua.','Faixa com todas as IAs do catálogo passando abaixo da busca.']},
  {version:'5.6',date:'03/11/2026',items:['Monte sua alcateia: projetos grandes viram uma alcateia de IAs, cada uma com um papel, correndo em formação.','Lobo guia: um mascote que fica atento quando você digita, uiva quando encontra IAs e dá dicas.','Sons gerados no navegador: trilha e uivo na abertura, uivo do lobo guia; liga e desliga em Meu espaço.']},
  {version:'5.5',date:'03/11/2026',items:['O site agora se chama Loopins — “alcateia de lobos”.','Novo logotipo de lobo uivando para a lua.','Na abertura do modo apresentação, as partículas formam LOOPINS e depois se transformam num lobo uivando para a lua.']},
@@ -174,7 +175,7 @@ function showHow(){
 
 /* ── Modo apresentação: roteiro automático para mostrar o Loopins a uma turma ── */
 const demo=[
- {q:'Quero criar um site sem saber programar',note:'Olhe a galáxia: das 71 IAs, só as que constroem sites sem código continuam acesas, e as 3 melhores vão para perto do pedido. Abaixo, “Por que esta IA ficou em primeiro lugar?” mostra a conta.',open:'.why-first'},
+ {q:'Quero criar um site sem saber programar',note:'Olhe a galáxia: das 127 IAs, só as que constroem sites sem código continuam acesas, e as 3 melhores vão para perto do pedido. Abaixo, “Por que esta IA ficou em primeiro lugar?” mostra a conta.',open:'.why-first'},
  {q:'Tenho um site em HTML, CSS e JavaScript e preciso corrigir seus erros',note:'Mesmo assunto, objetivo diferente: agora entram agentes que editam código que já existe.'},
  {q:'Quero programar um assistente virtual que responda por voz no computador',note:'A voz é um recurso do programa, não o produto. Por isso aparecem ferramentas de programação, e a voz vira uma etapa complementar.'},
  {q:'Quero criar um cartaz de confeitaria com textos perfeitamente legíveis',note:'Texto legível na imagem é um requisito: só entram geradores com essa capacidade confirmada.'},

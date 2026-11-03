@@ -65,9 +65,10 @@ function buildMarquee(){
   const tools=[...E.tools].sort((a,b)=>a.name.localeCompare(b.name,'pt-BR'));
   const esc=v=>String(v).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';'),color=v=>/^#[0-9a-f]{3,8}$/i.test(v)?v:'#6c8aff';
   const chip=t=>'<span class="mq-chip"><b style="--tool-start:'+color(t.colors?.[0])+';--tool-end:'+color(t.colors?.[1])+'">'+esc(t.name.charAt(0))+'</b>'+esc(t.name)+'</span>';
-  const row=(list,cls)=>{const html=list.map(chip).join('');return '<div class="mq-row '+cls+'"><div class="mq-track">'+html+html+'</div></div>';};
+  // Velocidade constante: a duração cresce com a quantidade de IAs na faixa.
+  const row=(list,cls,k)=>{const html=list.map(chip).join('');return '<div class="mq-row '+cls+'"><div class="mq-track" style="animation-duration:'+Math.round(list.length*k)+'s">'+html+html+'</div></div>';};
   const band=document.createElement('section');band.id='aiMarquee';band.className='ai-marquee';band.setAttribute('aria-label','Faixa com as '+tools.length+' IAs do catálogo');
-  band.innerHTML='<p class="mq-title"><span>'+tools.length+'</span> IAs na alcateia</p><div aria-hidden="true">'+row(tools.filter((_,i)=>i%2===0),'mq-left')+row(tools.filter((_,i)=>i%2===1),'mq-right')+'</div><p class="sr-only">'+esc(tools.map(t=>t.name).join(', '))+'.</p>';
+  band.innerHTML='<p class="mq-title"><span>'+tools.length+'</span> IAs na alcateia</p><div aria-hidden="true">'+row(tools.filter((_,i)=>i%2===0),'mq-left',2.6)+row(tools.filter((_,i)=>i%2===1),'mq-right',3)+'</div><p class="sr-only">'+esc(tools.map(t=>t.name).join(', '))+'.</p>';
   hero.after(band);
   if(typeof getComputedStyle==='function'&&getComputedStyle(band.querySelector('.mq-track')).display!=='flex')band.remove();
 }
