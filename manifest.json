@@ -1,0 +1,147 @@
+[
+  {
+    "file": "index.html",
+    "bytes": 21735,
+    "sha256": "51c13eda23374578ad2b591be6e5e18863273fd0282ac7206431aca6577b359c"
+  },
+  {
+    "file": "manifest.webmanifest",
+    "bytes": 373,
+    "sha256": "230b6ffa072b7dfbde9d1c0a7b2678827ceabc7a334e9023938e5f954fdb30dd"
+  },
+  {
+    "file": "icon.svg",
+    "bytes": 846,
+    "sha256": "c70d7312425d655525ebbed91ad3a21492e3bc00ca9a0902932a3b2dda35d32b"
+  },
+  {
+    "file": "styles.css",
+    "bytes": 61961,
+    "sha256": "448df4cd2b9b93ee77bf09dd362a1a804754f0f946071489fd26f48886b9252a"
+  },
+  {
+    "file": "catalog-facts.js",
+    "bytes": 44233,
+    "sha256": "6665bbd1112c94addb2b5e6e23f3ea409b83a75d3e91d97d9d68c350fe9a9c50"
+  },
+  {
+    "file": "capabilities.js",
+    "bytes": 13047,
+    "sha256": "643af56c87f7a5e74ac48c32dfa105852d28bd6044d1fff42490834400883b31"
+  },
+  {
+    "file": "catalog.js",
+    "bytes": 21494,
+    "sha256": "5bfa8ff5b48815d46ebcaa91b0a5708285f83fc87206c9fdfe3e55f4eb1fa87d"
+  },
+  {
+    "file": "recommender.js",
+    "bytes": 47954,
+    "sha256": "51f9115c5eead809c0f1765dd1c771f20cd216101401473eea020c77d828f9d3"
+  },
+  {
+    "file": "storage.js",
+    "bytes": 2141,
+    "sha256": "d75bb09487c2b3179b0af3c1da08c28e3fada0fb299cf858cb48c12552a74092"
+  },
+  {
+    "file": "settings.js",
+    "bytes": 2953,
+    "sha256": "8a8485166d1f303029502e5b618d821434d517a3ae8ba47c8b7f1346a7654de8"
+  },
+  {
+    "file": "engine.js",
+    "bytes": 2456,
+    "sha256": "0bc9aabd9dd0841f579f8f67b4b744e2c8d37ecca83920d68debd543c1c1281e"
+  },
+  {
+    "file": "features.js",
+    "bytes": 37081,
+    "sha256": "02cd3ef96ccdae408be0cb17b0886225b66128e38333ae245f9d2612c75fcb6c"
+  },
+  {
+    "file": "projects.js",
+    "bytes": 32933,
+    "sha256": "6273c0203b573cda1f1d65d47145d4f787dbbf591a47d2fcb3a827b1c0da5ad5"
+  },
+  {
+    "file": "prompt-editor.js",
+    "bytes": 1506,
+    "sha256": "607fb9ae4f2fe8230127dcbd92fa020d32fc83d055876f50b491a090e106b3d4"
+  },
+  {
+    "file": "providers.js",
+    "bytes": 3316,
+    "sha256": "252ecd4503869811d1642bbe399cb50f5afda48bd6a310d001fddc0d82346775"
+  },
+  {
+    "file": "prompt-studio.js",
+    "bytes": 26051,
+    "sha256": "061e7bb10ff162a14b42320874e7e20be317a0989e21ba3dc3201756a541b4e0"
+  },
+  {
+    "file": "evolution-ui.js",
+    "bytes": 27954,
+    "sha256": "881f858d01596be92dd866b1d9f381d8542752a1b6557e462086affdf449a2e9"
+  },
+  {
+    "file": "workspace.js",
+    "bytes": 39290,
+    "sha256": "5460a15088973ecffe41f1b8dbd76cce582f2ce12083ec12843a9b62e005daa0"
+  },
+  {
+    "file": "app.js",
+    "bytes": 52177,
+    "sha256": "cbf70955deb509fb8d2c00099ea3ce33b9ad14008670978a9a9d4941817683d4"
+  },
+  {
+    "file": "galaxy.js",
+    "bytes": 16378,
+    "sha256": "696db13971ec7bc8c6ba160a07c41cfd66cefdc74b862ca7e337b5116847ea9a"
+  },
+  {
+    "file": "galaxy3d.js",
+    "bytes": 12502,
+    "sha256": "34cb6cb72c6e4ef05df77e13e4c755fe1f02eaeb2d5d04b8ea7aba20faa91003"
+  },
+  {
+    "file": "kit.js",
+    "bytes": 8647,
+    "sha256": "2a0be3c6f2f1f93d8e6c2b886d2400589ad56bc26e0916359574f4fd9f4a4ba6"
+  },
+  {
+    "file": "voice.js",
+    "bytes": 3562,
+    "sha256": "ceeab38879e7fb464e8b60ffc2346cabbdf68880aba46f221f8bfa7a623b311f"
+  },
+  {
+    "file": "sound.js",
+    "bytes": 9139,
+    "sha256": "26313e4c686a109e5c1c1e3ebc6618c6bb429cdd8e4b3202b1b7018138cc91b7"
+  },
+  {
+    "file": "intro.js",
+    "bytes": 6462,
+    "sha256": "b08afa34a57e0757918dbb895084a66bfffb01b35077e457730222ecc393f96b"
+  },
+  {
+    "file": "pack.js",
+    "bytes": 12722,
+    "sha256": "37f4931182a98f834c2609659ba32f218adbf4d7366f1c276d4c94c692484184"
+  },
+  {
+    "file": "mascot.js",
+    "bytes": 5284,
+    "sha256": "ce13ff7ce429516c60d6846c958fcbcd4289df03b01611ff4edf439bc0a2fdea"
+  },
+  {
+    "file": "ui-extras.js",
+    "bytes": 25251,
+    "sha256": "9380f5ec5a60d7a13ad79394bafa6dc7c945a28d16059d00fc767cc75e1422aa"
+  },
+  {
+    "file": "robots.txt",
+    "bytes": 23,
+    "sha256": "16ceb5ee3e0dc13aa9adf31a3ebbe45a1d965b8c2b9f72eaf84e5911e140ed95"
+  }
+]

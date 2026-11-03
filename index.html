@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0c15" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="index,follow">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="description" content="Loopins: descubra três ferramentas de IA adequadas para cada tarefa, compare vantagens e limitações e explore integrações." />
+  <title>Loopins — descubra, planeje e organize seu trabalho</title>
+<meta property="og:title" content="Loopins — descubra e planeje com IAs">
+<meta property="og:description" content="Recomendações explicáveis, fluxos editáveis, prompts e projetos locais.">
+<meta property="og:type" content="website">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<a class="skip-link" href="#mainContent">Pular para o conteúdo</a>
+  <svg aria-hidden="true" class="icon-sprite" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-wolf" viewBox="-6 0 200 200"><circle cx="186" cy="34" r="22" opacity=".55"/><path d="M86 48 L84 12 L97 29 L105 9 L111 29 L117 27 L150 5 L158 11 L135 30 L157 27 L156 35 L127 50 L133 58 L125 64 L133 72 L125 79 L131 89 L122 96 C124 110 125 125 125 140 L127 185 L138 189 L138 194 L111 194 L112 151 L105 158 L105 184 L113 189 L113 194 L80 194 L62 194 C38 199 12 193 6 173 L0 177 L4 167 L-1 160 L9 158 L6 151 L16 157 C26 168 42 173 56 168 C46 148 48 124 62 106 C71 94 77 82 80 68 L74 63 L81 57 L77 51 Z"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3ZM19 16l.7 1.3L21 18l-1.3.7L19 20l-.7-1.3L17 18l1.3-.7L19 16ZM5 16l.6 1.4L7 18l-1.4.6L5 20l-.6-1.4L3 18l1.4-.6L5 16Z"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8 4.8-2.2Z"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9" r="1.5"/><path d="m4 17 5-5 4 4 3-3 4 4"/></symbol>
+    <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="5" width="13" height="14" rx="3"/><path d="m16 10 5-3v10l-5-3"/></symbol>
+    <symbol id="i-graduation" viewBox="0 0 24 24"><path d="m2 9 10-5 10 5-10 5L2 9Zm4 3v5c4 3 8 3 12 0v-5m4-3v7"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm8 0v5h5M9 13h6m-6 4h6"/></symbol>
+    <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M3 14V12a9 9 0 0 1 18 0v2M3 14h4v7H5a2 2 0 0 1-2-2v-5Zm18 0h-4v7h2a2 2 0 0 0 2-2v-5Z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-panel" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M14 4v16m-7-8h4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.7 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.7a2 2 0 0 0-3.4 0ZM12 9v5m0 3h.01"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 7 1-5 4.9 1.2 6.9L12 17.8l-6.3 3.3 1.2-6.9-5-4.9 7-1L12 2Z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M12 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7m-7-9h9v9m0-9L11 13"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4L22 2ZM11 13l11-11"/></symbol>
+    <symbol id="i-lightbulb" viewBox="0 0 24 24"><path d="M9 18h6m-5 3h4M8 15.5C6.6 14.4 6 13 6 11a6 6 0 0 1 12 0c0 2-.6 3.4-2 4.5-.5.4-1 1.5-1 2.5H9c0-1-.5-2.1-1-2.5Z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 2 9 4v6c0 5-3 8-9 10-6-2-9-5-9-10V6l9-4Zm-4 10 3 3 5-6"/></symbol>
+  </svg>
+
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Navegação">
+      <a class="brand" href="#inicio" aria-label="Loopins, início">
+        <span class="brand-mark"><svg class="icon wolf"><use href="#i-wolf"/></svg></span>
+        <span class="brand-text">loop<span>ins</span><small>Seu universo de IAs</small></span>
+      </a>
+      <div class="side-section-label">EXPLORE</div>
+      <nav id="categoryNav" class="nav-links" aria-label="Categorias"></nav>
+      <div class="side-section-label secondary-label">FERRAMENTAS</div>
+      <nav class="nav-links" aria-label="Ferramentas do Loopins">
+        <button class="nav-item" type="button" data-workspace="planner"><svg class="icon"><use href="#i-arrow"/></svg> Fluxos / Planejador</button>
+        <button class="nav-item" type="button" data-workspace="projects"><svg class="icon"><use href="#i-file"/></svg> Projetos</button>
+        <button class="nav-item" type="button" data-workspace="compare"><svg class="icon"><use href="#i-panel"/></svg> Comparar IAs</button>
+        <button class="nav-item" type="button" data-workspace="prompts"><svg class="icon"><use href="#i-sparkles"/></svg> Criar prompts</button>
+        <button class="nav-item" type="button" data-workspace="responses"><svg class="icon"><use href="#i-file"/></svg> Comparar respostas</button>
+        <button class="nav-item" type="button" data-workspace="library"><svg class="icon"><use href="#i-search"/></svg> Biblioteca de IAs</button>
+      </nav>
+      <div class="side-section-label secondary-label">SUA ÁREA</div>
+      <nav class="nav-links" aria-label="Pessoal">
+        <button class="nav-item" type="button" data-workspace="diagnostics"><svg class="icon"><use href="#i-check"/></svg> Feedback local</button>
+        <button class="nav-item" type="button" data-workspace="information"><svg class="icon"><use href="#i-shield"/></svg> Privacidade e fontes</button>
+        <button class="nav-item" type="button" data-workspace="galaxy"><svg class="icon"><use href="#i-sparkles"/></svg> Galáxia de IAs</button>
+        <button class="nav-item" type="button" data-workspace="pack"><svg class="icon"><use href="#i-wolf"/></svg> Monte sua alcateia</button>
+        <button class="nav-item" type="button" data-workspace="kit"><svg class="icon"><use href="#i-star"/></svg> Monte seu kit de IA</button>
+        <button class="nav-item" type="button" data-workspace="how"><svg class="icon"><use href="#i-lightbulb"/></svg> Como funciona</button>
+        <button class="nav-item" type="button" data-workspace="help"><svg class="icon"><use href="#i-info"/></svg> Central de ajuda</button>
+        <button class="nav-item" type="button" data-workspace="news"><svg class="icon"><use href="#i-sparkles"/></svg> Novidades</button>
+        <button class="nav-item" type="button" data-view="favorites"><svg class="icon"><use href="#i-star"/></svg> Favoritos <span class="nav-count" id="favoritesCount">0</span></button>
+        <button class="nav-item" type="button" data-view="history"><svg class="icon"><use href="#i-clock"/></svg> Histórico</button>
+        <button class="nav-item" type="button" data-workspace="profile"><svg class="icon"><use href="#i-shield"/></svg> Meu espaço <span class="nav-count">LOCAL</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="side-note"><span class="side-note-icon"><svg class="icon"><use href="#i-lightbulb"/></svg></span><strong>Uma IA para cada ideia</strong><p>Compare opções antes de começar seu projeto.</p></div>
+        <button type="button" id="aboutSidebar" class="sidebar-help"><svg class="icon"><use href="#i-info"/></svg> Como funciona?</button>
+      </div>
+    </aside>
+
+    <div class="content-column" id="inicio">
+      <header class="topbar">
+        <div class="topbar-left"><button class="icon-button mobile-menu" id="menuButton" aria-label="Abrir menu" type="button"><svg class="icon"><use href="#i-menu"/></svg></button><span class="breadcrumbs">Explore <svg class="icon mini"><use href="#i-chevron"/></svg> <strong id="currentView">Descobrir</strong></span></div>
+        <div class="topbar-right"><button class="top-help" id="paletteOpen" type="button" aria-keyshortcuts="Control+K"><svg class="icon"><use href="#i-search"/></svg> Buscar <kbd>Ctrl K</kbd></button><button class="top-help" id="presentOpen" type="button"><svg class="icon"><use href="#i-video"/></svg> Apresentar</button><button class="top-help" id="themeToggle" type="button" aria-pressed="false">Tema claro</button><span class="top-status" id="aiStatusBadge"><span class="online-dot"></span> Recomendador local gratuito</span><button class="top-help" id="aboutTop" type="button">Sobre o projeto <svg class="icon"><use href="#i-info"/></svg></button></div>
+      </header>
+
+      <main class="main-content" id="mainContent" tabindex="-1">
+        <section class="hero" id="heroSection" aria-labelledby="heroTitle">
+          <span class="hero-eyebrow"><svg class="icon"><use href="#i-sparkles"/></svg> O próximo passo da sua criatividade</span>
+          <h1 id="heroTitle">Uma ideia.<br /><span class="gradient-text">A IA certa.</span></h1>
+          <p class="hero-description">Descreva o que você quer criar. O Loopins identifica a finalidade do seu pedido e encontra três ferramentas para o seu objetivo, com vantagens e limitações.</p>
+          <div class="hero-stats" id="heroStats" aria-label="Números do catálogo"><div><strong data-count="tools">0</strong><span>IAs no catálogo</span></div><div><strong data-count="tasks">0</strong><span>tipos de tarefa</span></div><div><strong data-count="sources">0</strong><span>fontes oficiais</span></div></div>
+          <form id="searchForm" class="prompt-box">
+            <label class="sr-only" for="taskInput">O que você quer fazer?</label>
+            <textarea id="taskInput" rows="3" maxlength="6500" placeholder="Ex.: Quero criar um site usando HTML, CSS e JavaScript..." required aria-autocomplete="list" aria-controls="searchSuggestions" aria-expanded="false"></textarea>
+            <div id="searchSuggestions" class="search-suggestions" role="listbox" aria-label="Sugestões de pesquisa" hidden></div>
+            <div class="live-intent" id="liveIntent" aria-live="polite" hidden></div>
+            <div class="prompt-footer"><span class="prompt-hint"><svg class="icon"><use href="#i-sparkles"/></svg> Seja específico para obter uma indicação melhor</span><button id="searchButton" class="primary-button" type="submit">Encontrar IAs <svg class="icon"><use href="#i-arrow"/></svg></button></div>
+          </form>
+          <details class="search-preferences"><summary>Refinar recomendações</summary><div class="ws-picker"><label class="ws-field"><span>Categoria</span><select id="prefCategory"></select></label><label class="ws-field"><span>Orçamento</span><select id="prefBudget"><option value="any">Qualquer / não verificado</option><option value="free">Grátis ou freemium confirmado</option><option value="free-strict">Somente totalmente grátis</option></select></label><label class="ws-field"><span>Experiência</span><select id="prefExperience"><option value="any">Qualquer</option><option value="beginner">Iniciante</option><option value="advanced">Experiente</option></select></label><label class="ws-field"><span>Plataforma confirmada</span><select id="prefPlatform"><option value="any">Qualquer</option><option value="web">Web</option><option value="desktop">Desktop</option></select></label></div><label class="ws-checkbox"><input id="prefOffline" type="checkbox"> Exigir opção com modo offline confirmado</label><div class="ws-form-row"><label class="ws-field"><span>Formato obrigatório</span><select id="prefFormat"><option value="">Qualquer</option><option value="svg">SVG editável</option><option value="html">HTML estático</option></select></label><label class="ws-field"><span>Integração Loopins</span><select id="prefIntegration"><option value="any">Qualquer / link externo</option><option value="connected">Somente conectada oficialmente</option></select></label></div><label class="ws-checkbox"><input id="prefPrivacy" type="checkbox"> Exigir privacidade estrita confirmada</label><p class="ws-help">Campos desconhecidos não atendem a filtros restritos. Custos e condições devem ser conferidos no site oficial.</p></details>
+          <div class="examples"><span>Experimente:</span><button type="button" data-example="Quero criar uma imagem de uma cidade futurista">Criar uma imagem</button><button type="button" data-example="Quero fazer um vídeo animado de uma paisagem">Gerar um vídeo</button><button type="button" data-example="Quero criar um site usando HTML, CSS e JavaScript">Programar um site</button><button type="button" data-example="Quero estudar matemática para uma prova">Estudar melhor</button></div>
+          <div class="examples recent-searches" id="recentSearches" hidden></div>
+          <button type="button" class="hero-how" data-workspace="how">Como o Loopins decide? →</button>
+          <details class="example-groups"><summary>Mais exemplos por categoria</summary><div id="exampleGroups" class="example-grid"></div></details>
+        </section>
+
+        <section class="galaxy-stage" id="galaxyStage" aria-label="Galáxia de IAs: visualização da filtragem">
+          <canvas id="galaxyHero" aria-hidden="true"></canvas>
+          <div class="galaxy-hud" id="galaxyHud" aria-live="polite"><span><strong id="galaxyTotal">0</strong> analisadas</span><span><strong id="galaxyEligible">0</strong> elegíveis</span><span><strong id="galaxyTop">0</strong> recomendadas</span><em id="galaxyLabel"></em></div>
+          <button type="button" class="galaxy-open" data-workspace="galaxy">Explorar a galáxia ↗</button>
+        </section>
+        <section class="workspace" id="workspace" hidden aria-label="Ferramenta selecionada"></section>
+
+        <section class="results" id="resultSection" aria-labelledby="resultTitle">
+          <div class="section-heading"><div><span class="section-kicker" id="sectionKicker">ESCOLHIDAS PARA VOCÊ</span><h2 id="resultTitle">Suas melhores opções</h2><p id="resultsRationale">Sugestões baseadas no tipo de tarefa que você descreveu.</p></div><span class="result-count" id="resultCount">03 recomendações</span></div>
+          <div id="analysisSignals" class="analysis-signals" aria-live="polite"></div>
+          <div id="recommendationChoices"></div>
+          <div id="recommendations" class="recommendation-grid" aria-live="polite"></div>
+          <div id="resultExtras" class="result-extras"></div><details id="excludedWrap" hidden><summary>Por que outras opções ficaram de fora?</summary><ul id="excludedList"></ul></details>
+          <div class="ranking-note"><svg class="icon"><use href="#i-info"/></svg><p><strong>Como classificamos:</strong> usamos regras e um catálogo editorial expandido, sem enviar seu pedido para nenhuma IA. A ordem usa critérios editoriais de adequação e não representa testes científicos ou preços em tempo real.</p></div>
+        </section>
+
+        <section class="bottom-banner" id="bottomBanner"><div class="bottom-icon"><svg class="icon"><use href="#i-shield"/></svg></div><div><strong>Sua privacidade vem primeiro</strong><p>O recomendador funciona no seu navegador. Nenhuma senha é solicitada, e o Loopins não se conecta automaticamente às suas contas de IA.</p></div><button type="button" id="privacyButton">Saiba mais <svg class="icon"><use href="#i-arrow"/></svg></button></section>
+        <footer class="footer"><span>© 2026 Loopins · Projeto escolar</span><span>Feito para descobrir, comparar e criar.</span></footer>
+      </main>
+    </div>
+  </div>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+  <aside class="chat-drawer" id="chatDrawer" role="dialog" aria-label="Painel lateral de IA" aria-hidden="true" inert>
+    <div class="chat-top"><div class="chat-tool-icon" id="chatToolIcon">C</div><div class="chat-top-names"><strong id="chatToolName">Claude</strong><span id="chatToolStatus">Não integrada · modo local</span></div><button class="icon-button" id="closeChat" type="button" aria-label="Fechar painel"><svg class="icon"><use href="#i-close"/></svg></button></div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-bottom" id="chatBottom"></div>
+  </aside>
+
+  <dialog id="aboutDialog" class="about-dialog" aria-labelledby="aboutTitle"><div class="dialog-head"><div><span class="section-kicker">SOBRE O PROJETO</span><h2 id="aboutTitle">Como o Loopins funciona?</h2></div><button id="closeAbout" aria-label="Fechar" class="icon-button"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="dialog-content"><p>O <strong>Loopins 5.0</strong> é um recomendador gratuito e independente de ferramentas de inteligência artificial. Uma análise local identifica o objetivo principal, os requisitos e as restrições do pedido e compara com um catálogo de competências documentadas em fontes oficiais. Compare ferramentas, monte prompts e avalie respostas que você mesmo colar.</p><ol><li>Escreva o que deseja criar ou selecione um exemplo.</li><li>Veja até três sugestões e compare pontos fortes e limitações.</li><li>Use Comparar IAs, Criar prompts, Comparar respostas e Biblioteca. O painel mostra fontes, limitações e seu prompt; não envia mensagens às IAs.</li></ol><div class="dialog-warning"><svg class="icon"><use href="#i-alert"/></svg><p><strong>Transparência:</strong> as ferramentas recomendadas não são integradas ao Loopins. Assinaturas e créditos dos sites de IA não podem ser usados aqui. O guia local usa respostas prontas; o chat com IA só aparece quando o servidor do Loopins tem um provedor configurado, e sempre mostra qual provedor e modelo responde.</p></div><p>Para o projeto público, só integraremos contas por autorizações oficiais. Nunca peça a senha de um serviço para conectá-lo ao Loopins.</p></div><button class="primary-button dialog-button" id="gotIt" type="button">Entendi <svg class="icon"><use href="#i-check"/></svg></button></dialog>
+
+  <dialog id="paletteDialog" class="palette-dialog" aria-label="Busca global"><label class="sr-only" for="paletteInput">Buscar telas, ferramentas e ações</label><input id="paletteInput" type="search" placeholder="Buscar telas, ferramentas ou digite um pedido…" autocomplete="off" role="combobox" aria-controls="paletteList" aria-expanded="true"><ul id="paletteList" role="listbox"></ul><p class="ws-help">↑ ↓ para navegar · Enter para abrir · Esc para fechar</p></dialog>
+  <div class="present-bar" id="presentBar" role="region" aria-label="Modo apresentação" hidden><div class="present-text"><span class="present-step" id="presentStep"></span><p id="presentNote" aria-live="polite"></p></div><div class="present-controls"><button class="outline-button" id="presentPrev" type="button">← Anterior</button><button class="outline-button" id="presentPause" type="button">Pausar</button><button class="primary-button" id="presentNext" type="button">Próximo →</button><button class="outline-button" id="presentSound" type="button" aria-pressed="true">Som: ligado</button><button class="text-button" id="presentExit" type="button">Sair (Esc)</button></div></div>
+  <div class="tour-box" id="tourBox" role="dialog" aria-label="Tour rápido" hidden><p id="tourText"></p><div class="ws-actions"><span id="tourCount" class="ws-help"></span><button class="text-button" id="tourSkip" type="button">Pular tour</button><button class="primary-button" id="tourNext" type="button">Próximo</button></div></div>
+  <div role="status" aria-live="polite" class="toast" id="toast"></div>
+  <script src="catalog-facts.js"></script>
+  <script src="capabilities.js"></script>
+  <script src="catalog.js"></script>
+  <script src="recommender.js"></script>
+  <script src="storage.js"></script>
+  <script src="settings.js"></script>
+  <script src="engine.js"></script>
+  <script src="features.js"></script>
+  <script src="projects.js"></script>
+  <script src="prompt-editor.js"></script>
+  <script src="providers.js"></script>
+  <script src="prompt-studio.js"></script>
+  <script src="evolution-ui.js"></script>
+  <script src="workspace.js"></script>
+  <script src="app.js"></script>
+  <script src="galaxy.js"></script>
+  <script src="galaxy3d.js"></script>
+  <script src="kit.js"></script>
+  <script src="voice.js"></script>
+  <script src="sound.js"></script>
+  <script src="intro.js"></script>
+  <script src="pack.js"></script>
+  <script src="mascot.js"></script>
+  <script src="ui-extras.js"></script>
+</body>
+</html>
