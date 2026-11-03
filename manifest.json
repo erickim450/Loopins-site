@@ -1,8 +1,8 @@
 [
   {
     "file": "index.html",
-    "bytes": 22282,
-    "sha256": "e72a333c8e70d9b0b9c6b9afecc3f8a9f3a291840e6faa35d4652f28d8890cad"
+    "bytes": 22559,
+    "sha256": "50c7bbb03fa347ef91b5d616c0f29fd342afc42788d668350c70cb63f53b76cc"
   },
   {
     "file": "manifest.webmanifest",
@@ -16,8 +16,8 @@
   },
   {
     "file": "styles.css",
-    "bytes": 73846,
-    "sha256": "41bd2e22dc90582acce1cc9600872694c3dfac660a95fb3c5c9186dac8bf1526"
+    "bytes": 77282,
+    "sha256": "c731bdeac53443c549f4006c2f840b0459d442d7e4274844a423381224453004"
   },
   {
     "file": "catalog-facts.js",
@@ -86,13 +86,13 @@
   },
   {
     "file": "workspace.js",
-    "bytes": 39353,
-    "sha256": "5fc2f6435c8aa81b0e6344e25983a58b25799ac6c6d5752e20f6764433d39ca5"
+    "bytes": 39570,
+    "sha256": "3be47fed3a28450acafdfed433e133e13cf55d8dc165c9026ac3988c11a44544"
   },
   {
     "file": "app.js",
-    "bytes": 52227,
-    "sha256": "58221d680e80eb50898d8d0407ef866e48781e979a0fc6671d9dd4fb01a271dc"
+    "bytes": 52626,
+    "sha256": "390bbda7289591e87ced2bcfd6ea709a4954a5f6f82898b0c07dc1e2c706e2f1"
   },
   {
     "file": "galaxy.js",
@@ -131,18 +131,28 @@
   },
   {
     "file": "mascot.js",
-    "bytes": 16125,
-    "sha256": "10a767b5d1c7ebbb2148d643decc749f4c5c23a50c8a7fcd0a3d44515d37ac70"
+    "bytes": 19104,
+    "sha256": "a60f039cb73532ca9290622b2892ff6922c3ea39ab90e18538b4a103a2f5744a"
   },
   {
     "file": "night-sky.js",
-    "bytes": 7203,
-    "sha256": "93681951aadb20f017cc9dc7703362e479bf7372ac6d2a5be4920d3374104e94"
+    "bytes": 12408,
+    "sha256": "231f2f0df0743dabe8cf18871ea1167b37cdf2162968f4b1c3d0d635f0f028b4"
+  },
+  {
+    "file": "pack-map.js",
+    "bytes": 5497,
+    "sha256": "bef700d7244ea3f8e52b221c022d91a517591ccd2ababffd38bbfef2ccd215a2"
+  },
+  {
+    "file": "share-card.js",
+    "bytes": 8210,
+    "sha256": "5fbce37a621dc3959edb1e1abdc8fd2893a2055cd8d5ac13fd57af4c3934235e"
   },
   {
     "file": "ui-extras.js",
-    "bytes": 30827,
-    "sha256": "90970bd47e033f66a1de025649f08533bcc3402c852bfd83ac6848ac224b04e0"
+    "bytes": 31440,
+    "sha256": "974d1edd4556002c2e97f839b2afc55a6d590c81c0be5752827b44b802b101b0"
   },
   {
     "file": "robots.txt",

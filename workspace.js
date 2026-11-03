@@ -28,6 +28,7 @@ function show(which){view=which;const w=el('workspace');if(!w)return;
  if(view==='profile')renderProfile();
  if(['help','news','how'].includes(view))window.NexusExtras?.show(view);
  if(view==='loopino')window.NexusMascot?.showPage();
+ if(view==='packmap')window.NexusPackMap?.show();
  if(view==='galaxy')window.NexusGalaxy?.showView();
  if(view==='kit')window.NexusKit?.show();
  if(view==='pack'){const pre=window.NexusPack?.pending;if(window.NexusPack)window.NexusPack.pending=null;window.NexusPack?.show(pre);}
@@ -161,7 +162,7 @@ const S=window.NexusStore,p=profile(),ps=saved(),history=ctx.history(),favorites
 const feedback=S.read('nexus:feedback:v3',[]);
 el('workspace').innerHTML=header('SEU ESPAÇO','Perfil e dados locais','Sem conta online e sem sincronização. Faça um backup antes de mudar de navegador ou endereço do site.')+
 `<div class="profile-stats"><div class="metric"><span>Favoritos</span><strong>${favorites.length}</strong></div><div class="metric"><span>Buscas</span><strong>${history.length}</strong></div><div class="metric"><span>Prompts</span><strong>${ps.length}</strong></div></div>
-<div class="ws-block"><form id="profileForm" class="ws-form"><label class="ws-field"><span>Seu apelido</span><input name="name" maxlength="48" value="${esc(p.name)}"></label><button class="primary-button" type="submit">Salvar nome</button></form><p class="ws-help">Uso estimado das chaves Loopins: ${S.bytes()===null?'indisponível':(S.bytes()/1024).toFixed(1)+' KB'} (UTF-16; não é a cota do navegador).</p>
+<div class="ws-block"><form id="profileForm" class="ws-form"><label class="ws-field"><span>Seu apelido</span><input name="name" maxlength="48" value="${esc(p.name)}" autocomplete="nickname"></label><button class="primary-button" type="submit">Salvar nome</button></form><p class="ws-help">O Loopino, o lobo guia, vai te chamar por esse nome. Fica só neste navegador.</p><p class="ws-help">Uso estimado das chaves Loopins: ${S.bytes()===null?'indisponível':(S.bytes()/1024).toFixed(1)+' KB'} (UTF-16; não é a cota do navegador).</p>
 <label class="ws-checkbox"><input id="privateMode" type="checkbox" ${S.isPrivate()?'checked':''}> Sessão privada: sem gravar novas alterações ou pesquisas</label><p class="ws-help">Dados anteriores continuam disponíveis. As mudanças desta sessão são temporárias; exporte antes de sair do modo privado.</p></div>
 <div class="ws-block"><h2>Preferências de recomendação</h2><p class="ws-help">Viram o padrão dos filtros da pesquisa neste navegador.</p><form id="prefsForm" class="ws-form"><div class="ws-form-row">
 <label class="ws-field"><span>Orçamento</span><select name="budget"><option value="any">Qualquer</option><option value="free">Grátis ou freemium confirmado</option><option value="free-strict">Somente totalmente grátis</option></select></label>
@@ -182,7 +183,7 @@ el('aiInterpret').checked=st.aiInterpret;
 window.NexusProviders?.status().then(x=>{if(!el('aiProfileStatus'))return;el('aiProfileStatus').textContent=x.enabled?'Disponível: '+x.providerLabel+' · '+x.model+'. '+(x.dataNotice||''):(x.reason||'Indisponível.');el('aiInterpret').disabled=!x.enabled&&!st.aiInterpret;});
 el('aiInterpret').onchange=e=>{try{if(e.target.checked&&!confirm('Ao ativar, o texto de cada pesquisa será enviado ao provedor de IA configurado no servidor do Loopins. Continuar?')){e.target.checked=false;return;}window.NexusSettings.update(x=>{x.aiInterpret=e.target.checked;x.aiConsentAt=e.target.checked?new Date().toISOString():null;});ctx.notify(e.target.checked?'IA externa ativada para interpretar pesquisas.':'IA externa desativada.');}catch(err){ctx.notify(err.message);}};
 const usage=Object.entries(st.toolUsage).sort((a,b)=>b[1]-a[1]);el('toolUsage').innerHTML=usage.length?'<ul>'+usage.map(([id,n])=>'<li>'+esc(titleFor(id))+': '+n+'</li>').join('')+'</ul>':'<p class="ws-help">Nenhuma ainda.</p>';
-el('profileForm').onsubmit=e=>{e.preventDefault();const r=S.write(store.profile,{name:F.clean(new FormData(e.currentTarget).get('name'),48)});ctx.notify(r.ok?(r.persistent?'Perfil salvo.':'Perfil alterado só nesta sessão.'):r.error);};
+el('profileForm').onsubmit=e=>{e.preventDefault();const r=S.write(store.profile,{name:F.clean(new FormData(e.currentTarget).get('name'),48)});ctx.notify(r.ok?(r.persistent?'Perfil salvo.':'Perfil alterado só nesta sessão.'):r.error);if(r.ok)window.NexusMascot?.nameSaved?.();};
 el('privateMode').onchange=e=>{if(!e.target.checked&&!confirm('Sair da sessão privada e descartar mudanças temporárias? Exporte antes para preservá-las.')){e.target.checked=true;return;}S.setPrivate(e.target.checked);window.NexusEvolution.resetTransient();ctx.applyImported({favorites:S.read('nexus:favorites:v1',[]),history:S.read('nexus:history:v1',[])});renderProfile();};
 el('exportBackup').onclick=()=>{try{downloadJSON(window.NexusEvolution.repo.exportAll());}catch(e){ctx.notify(e.message);}};
 el('chooseBackup').onclick=()=>el('importBackup').click();

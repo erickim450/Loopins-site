@@ -482,3 +482,45 @@ body.presenting-quick .present-step{color:var(--cyan)}
 @media(prefers-reduced-motion:reduce){.wolf-guide,.wolf-guide .wolf-body{transition:none}}
 /* A faixa de IAs pertence à página inicial: some junto com a busca nas outras telas. */
 #heroSection[hidden]+.ai-marquee{display:none}
+/* 6.2 — truques do Loopino e lua vermelha */
+.wolf-guide.flip .wolf-body svg{animation:loopinoFlip 1.2s cubic-bezier(.4,0,.2,1)}
+@keyframes loopinoFlip{0%{transform:translateY(0) rotate(0)}30%{transform:translateY(-46px) rotate(-180deg)}60%{transform:translateY(-30px) rotate(-340deg)}80%{transform:translateY(4px) rotate(-360deg) scaleY(.9)}100%{transform:translateY(0) rotate(-360deg)}}
+.night-sky.blood .sky-moon{background:radial-gradient(circle at 36% 34%,#ffd2c2,#e2563f 45%,#7a1d14 80%);box-shadow:0 0 50px 14px rgba(255,80,60,.45),0 0 160px 60px rgba(200,40,40,.25)}
+.night-sky.blood .aurora{filter:blur(46px) hue-rotate(150deg) saturate(1.4)}
+.night-sky.blood .sky-wolf-line{stroke:rgba(255,170,150,.75)}
+.night-sky.blood .sky-howl{stroke:#ffb3a1;opacity:1;animation-duration:1.6s}
+.night-sky .sky-moon,.night-sky .aurora{transition:background 1.2s,box-shadow 1.2s,filter 1.2s}
+/* 6.2 — constelações por categoria */
+.sky-wolf{transition:opacity .38s ease,transform .38s ease}
+.sky-wolf.sky-swap{opacity:0;transform:scale(.92)}
+.sky-label{fill:rgba(205,212,255,.62);font:600 10.5px 'DM Sans',system-ui,sans-serif;letter-spacing:1.4px;text-transform:uppercase}
+html[data-theme="light"] .sky-label{fill:var(--accent);opacity:.7}
+@media(max-width:760px){.sky-label{display:none}}
+/* 6.2 — Mapa das alcateias */
+.pm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.pm-card{display:flex;flex-direction:column;gap:10px;margin:0}
+.pm-card header{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.pm-card h2{margin:0;font-size:19px}
+.pm-card header span{font-size:12px;color:var(--muted);font-weight:700}
+.pm-svg{width:100%;max-width:260px;align-self:center;height:auto}
+.pm-ring{fill:none;stroke:var(--line-strong);stroke-dasharray:3 5}
+.pm-link{stroke:rgba(164,155,255,.25);stroke-width:1}
+.pm-node{cursor:pointer}
+.pm-node circle{stroke:rgba(255,255,255,.35);stroke-width:1.2;transition:transform .2s;transform-box:fill-box;transform-origin:center}
+.pm-node:hover circle{transform:scale(1.18)}
+.pm-node text{fill:#fff;font-weight:800;font-family:'Space Grotesk','DM Sans',sans-serif;pointer-events:none}
+.pm-crown{fill:var(--cyan);font:800 9px 'DM Sans',sans-serif;letter-spacing:1.5px;text-transform:uppercase}
+.pm-leader{margin:0;font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.pm-leader b{color:var(--text)}
+.pm-leader small{font-size:11.5px}
+.pm-members{display:flex;flex-wrap:wrap;gap:6px}
+.pm-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 4px;border:1px solid var(--line);border-radius:99px;background:var(--panel-soft);color:var(--text);font-size:12px;font-weight:600}
+.pm-chip:hover,.pm-chip:focus-visible{border-color:var(--accent)}
+.pm-chip i{font-style:normal;width:20px;height:20px;border-radius:7px;display:grid;place-items:center;font-size:11px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--a),var(--b))}
+.pm-chip.lead{border-color:var(--accent);font-size:13px}
+/* 6.2 — Cartão de resultado */
+.share-dialog{max-width:560px}
+.share-dialog img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line)}
+.share-status{margin:8px 0 14px;color:var(--muted)}
+.share-actions{display:flex;gap:10px;padding:14px 26px 24px;flex-wrap:wrap}
+.share-actions .primary-button,.share-actions .outline-button{width:auto;text-decoration:none}

@@ -89,6 +89,17 @@ function svg(){
   '<g class="acc acc-study"><path d="M39 15 L58 7.5 L77 15 L58 22.5 Z" fill="#1b1f33"/><path d="M49 18 L49 24 Q58 28 67 24 L67 18 Z" fill="#1b1f33"/><path d="M77 15 L78 27" stroke="#f2c14e" stroke-width="1.7"/><circle cx="78" cy="28.4" r="2" fill="#f2c14e"/></g>'+
  '</g></g></svg>').replace(/mgBody/g,'mgBody'+n).replace(/mgParty/g,'mgParty'+n);
 }
+/* Desenho avulso (para o cartão de resultado): só o acessório e a roupa pedidos, sem depender do CSS. */
+function svgFor({gear='',outfit=''}={}){
+  if(typeof DOMParser!=='function')return '';
+  const doc=new DOMParser().parseFromString(svg().replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" width="400" height="415" '),'image/svg+xml'),root=doc.documentElement;
+  const drop=sel=>root.querySelectorAll(sel).forEach(n=>n.remove());
+  drop('.m-speed,.m-dust,.m-hind,.m-mouth');
+  root.querySelectorAll('.acc').forEach(n=>{if(!n.classList.contains('acc-'+gear))n.remove();});
+  const headGear=gear==='audio'||gear==='study';
+  root.querySelectorAll('.outfit').forEach(n=>{if(!n.classList.contains('outfit-'+outfit)||(headGear&&n.classList.contains('outfit-head')))n.remove();});
+  return new XMLSerializer().serializeToString(root);
+}
 let state='idle',idleTimer=null,stateTimer=null,tipIndex=0,bubbleTimer=null,staging=false,stageTimer=null;
 function setState(s,ms){
   const el=$('wolfGuide');if(!el)return;
@@ -96,7 +107,28 @@ function setState(s,ms){
   if(ms)stateTimer=setTimeout(()=>setState('idle'),ms);
   resetIdle();
 }
-function resetIdle(){clearTimeout(idleTimer);idleTimer=setTimeout(()=>{if(staging)return;setState('sleep');say('Zzz… me chame quando quiser.',0);},45000);}
+/* Apelido salvo em “Meu espaço” (nexus:profile:v2). Sem apelido, ele fala sem nome. */
+function userName(){try{const n=window.NexusStore?.read('nexus:profile:v2',{})?.name;return typeof n==='string'?n.replace(/\s+/g,' ').trim().slice(0,48):'';}catch(_){return '';}}
+const withName=(before,after='')=>{const n=userName();return n?before+', '+n+after:before+after;};
+function resetIdle(){clearTimeout(idleTimer);idleTimer=setTimeout(()=>{if(staging)return;setState('sleep');say(withName('Zzz… me chame quando quiser','.'),0);},45000);}
+/* Truques escondidos: digitar “loopino” ou “auuu” na busca. Retorna true quando era um truque. */
+function easterEgg(text){
+  const t=String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[!.?\s]+/g,'');
+  const el=$('wolfGuide');
+  if(/^loopino$/.test(t)){
+    if(el&&!el.hidden){el.classList.remove('flip');void el.offsetWidth;el.classList.add('flip');setTimeout(()=>el.classList.remove('flip'),1300);setState('alert',1400);say(withName('Me chamou','? ')+'Olha a minha cambalhota!',4200);}
+    return true;
+  }
+  if(/^a+u{2,}$/.test(t)){
+    window.NexusNightSky?.bloodMoon?.();window.NexusSound?.packHowl?.();
+    if(el&&!el.hidden){setState('howl',3200);say('AUUUU! A alcateia inteira respondeu!',5000);}
+    window.scrollTo({top:0,behavior:reduced()?'auto':'smooth'});
+    return true;
+  }
+  return false;
+}
+/* Chamado por Meu espaço ao salvar o apelido. */
+function nameSaved(){const n=userName(),el=$('wolfGuide');if(!el||el.hidden)return;setState('howl',1800);say(n?'Prazer, '+n+'! Agora eu sei o seu nome. Auuu!':'Tudo bem, vou te chamar só de “você”.',5200);if(!reduced())window.NexusSound?.play('mascot');}
 function say(text,ms=4200){
   const b=$('wolfBubble');if(!b)return;
   b.textContent=text;b.hidden=false;clearTimeout(bubbleTimer);
@@ -127,7 +159,7 @@ function showPage(){
   '<div class="ws-block loopino-hero">'+art('',today,'big')+'<div><h2>Quem é o '+NAME+'</h2><p><strong>Loopins</strong> quer dizer <em>alcateia de lobos</em>: várias IAs trabalhando juntas, cada uma no seu papel. O '+NAME+' é o lobo que guia essa alcateia. Ele fareja o seu pedido e aponta as IAs certas para ele.</p>'+
   '<p class="loopino-today">'+(today?'Roupa de hoje: <strong>'+esc(OUTFIT_INFO[today].label)+'</strong>, porque '+esc(outfitReason())+'.':'Hoje ele está sem roupa especial: as roupas aparecem em datas comemorativas.')+'</p>'+
   '<button class="outline-button loopino-howl" id="loopinoHowl" type="button">Ouvir o uivo do '+NAME+'</button></div></div>'+
-  '<div class="ws-block"><h2>O que ele faz</h2><ul class="loopino-list"><li>Fica atento enquanto você digita.</li><li>Uiva quando encontra IAs e fica triste quando nenhuma serve.</li><li>Troca de acessório conforme o tipo do seu pedido.</li><li>Corre quando você rola a página e senta quando você para.</li><li>Dorme depois de 45 segundos sem uso e acorda quando você volta.</li><li>Dá uma dica cada vez que você clica nele.</li><li>Fecha o telão rápido correndo até o centro da tela e uivando para a lua.</li></ul></div>'+
+  '<div class="ws-block"><h2>O que ele faz</h2><ul class="loopino-list"><li>Fica atento enquanto você digita.</li><li>Uiva quando encontra IAs e fica triste quando nenhuma serve.</li><li>Troca de acessório conforme o tipo do seu pedido.</li><li>Corre quando você rola a página e senta quando você para.</li><li>Dorme depois de 45 segundos sem uso e acorda quando você volta.</li><li>Te chama pelo apelido salvo em Meu espaço e cumprimenta conforme a hora do dia.</li><li>Tem truques escondidos… experimente digitar o nome dele na busca.</li><li>Dá uma dica cada vez que você clica nele.</li><li>Fecha o telão rápido correndo até o centro da tela e uivando para a lua.</li></ul></div>'+
   '<div class="ws-block"><h2>Um acessório para cada pedido</h2><ul class="loopino-grid">'+gearCards+'</ul></div>'+
   '<div class="ws-block"><h2>Roupa do dia</h2><p class="ws-help">Só visual: em algumas datas ele aparece arrumado. Quando o pedido pede um acessório na cabeça, o acessório vence.</p><ul class="loopino-grid">'+outfitCards+'</ul></div>'+
   '<p class="ws-help">Quer esconder o '+NAME+'? Passe o mouse sobre ele e clique no ×, ou desmarque em Meu espaço.</p>';
@@ -145,8 +177,8 @@ function init(){
   document.addEventListener('input',e=>{if(e.target?.id!=='taskInput'&&e.target?.id!=='packInput')return;if(e.target.id==='taskInput'&&!e.target.value.trim())setGear('');if(state!=='howl'&&!staging)setState('alert');clearTimeout(typingTimer);typingTimer=setTimeout(()=>{if(state==='alert')setState('idle');},1400);});
   document.addEventListener('loopins:results',e=>{
     const {count,top,family}=e.detail||{};
-    if(count>0){setGear(family);setState('howl',1800);say(count===1?'Auuu! Achei '+top+'.':'Auuu! Achei '+count+' IAs. A primeira é '+top+'.');if(!reduced())window.NexusSound?.play('mascot');}
-    else{setGear('');setState('sad',2200);say('Hmm… nenhuma IA tem tudo isso confirmado. Tente tirar uma restrição.');}
+    if(count>0){setGear(family);setState('howl',1800);say(withName('Auuu','! ')+(count===1?'Achei '+top+'.':'Achei '+count+' IAs. A primeira é '+top+'.'));if(!reduced())window.NexusSound?.play('mascot');}
+    else{setGear('');setState('sad',2200);say(withName('Hmm','… ')+'nenhuma IA tem tudo isso confirmado. Tente tirar uma restrição.');}
   });
   ['pointerdown','keydown','scroll'].forEach(ev=>document.addEventListener(ev,()=>{if(state==='sleep'){setState('idle');const b=$('wolfBubble');if(b)b.hidden=true;}else resetIdle();},{passive:true}));
   // Corre enquanto a página rola (virado para o sentido da rolagem) e senta quando ela para.
@@ -163,9 +195,10 @@ function init(){
   setInterval(()=>{const el=$('wolfGuide');if(!el||reduced()||state==='sleep')return;el.classList.add('blink');setTimeout(()=>el.classList.remove('blink'),160);},4200);
   resetIdle();
   // Apresentação: completa na primeira visita, curta nas seguintes.
-  const greeting=(metBefore()?'Oi de novo! O '+NAME+' voltou. O que vamos criar hoje?':'Oi! Eu sou o '+NAME+', o lobo guia da Loopins. Me diga o que você quer criar que eu farejo as IAs certas.')+(OUTFIT_GREETING[outfit]||'');
-  setTimeout(()=>{if(enabled()&&!document.body.classList.contains('presenting'))say(greeting,6500);},1500);
+  const h=new Date().getHours(),late=h<5,hello=late?'Boa madrugada':h<12?'Bom dia':h<18?'Boa tarde':'Boa noite';
+  const greeting=(metBefore()?withName(hello,'! ')+'O '+NAME+' voltou. O que vamos criar hoje?':withName(hello,'! ')+'Eu sou o '+NAME+', o lobo guia da Loopins. Me diga o que você quer criar que eu farejo as IAs certas.'+(userName()?'':' Dica: salve seu apelido em Meu espaço que eu te chamo pelo nome.'))+(late?' *bocejo* Lobo também precisa dormir… mas por você eu fico acordado.':'')+(OUTFIT_GREETING[outfit]||'');
+  setTimeout(()=>{if(enabled()&&!document.body.classList.contains('presenting')){say(greeting,late?8000:6500);if(late){setState('sleep',1400);}}},1500);
 }
-window.NexusMascot={name:NAME,setState,say,applyVisibility,setGear,stage,showPage,outfitFor,outfitReason,gear:GEAR};
+window.NexusMascot={name:NAME,setState,say,applyVisibility,setGear,stage,showPage,outfitFor,outfitReason,gear:GEAR,userName,nameSaved,easterEgg,svgFor};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();

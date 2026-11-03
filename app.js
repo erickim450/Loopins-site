@@ -53,6 +53,7 @@ else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();f
     $('workspace').hidden=true;
   }
   function selectCategory(category) {
+    if(typeof CustomEvent==='function'&&document.dispatchEvent)document.dispatchEvent(new CustomEvent('loopins:category',{detail:{category}}));
     state.category=category;state.view='discover';showBrowse();setNav(category);
     const text = $('taskInput').value.trim();
     const defaultQueries={all:'Quero criar um site usando HTML, CSS e JavaScript',code:'Quero criar um site usando HTML, CSS e JavaScript',image:'Quero criar uma imagem de uma cidade futurista',video:'Quero criar um vídeo curto usando inteligência artificial',study:'Quero estudar matemática para uma prova',text:'Quero escrever e revisar uma redação',audio:'Quero criar uma narração com voz natural'};
@@ -127,11 +128,12 @@ else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();f
         (data.otherOptions?.length?'<details><summary>Outras opções elegíveis ('+data.otherOptions.length+')</summary>'+data.otherOptions.map(t=>'<p><button class="text-button" data-panel="'+t.id+'">'+escapeHTML(t.name)+'</button> — '+escapeHTML(t.why)+'</p>').join('')+'</details>':''));
       choices.querySelectorAll('[data-refinement]').forEach(b=>b.onclick=()=>submitSearch(data.request,state.category,{...recommendationPreferences(),refinement:b.dataset.refinement,constraintText:data.intent?.constraintText}));
       extras.querySelectorAll('[data-workflow]').forEach(b=>b.onclick=()=>{const w=data.workflow[Number(b.dataset.workflow)];submitSearch(w.query,'all',{...recommendationPreferences(),refinement:w.subtask});});
-      extras.insertAdjacentHTML('beforeend','<div class="ws-actions"><button class="primary-button" id="resultPlan">Criar fluxo</button><button class="outline-button" id="resultPack">Montar uma alcateia para este projeto 🐺</button><button class="outline-button" id="resultProject">Salvar recomendação como projeto</button><button class="outline-button" id="resultCompare">Comparar para esta tarefa</button></div>'+window.NexusEvolution.feedbackForm(data));
+      extras.insertAdjacentHTML('beforeend','<div class="ws-actions"><button class="primary-button" id="resultPlan">Criar fluxo</button><button class="outline-button" id="resultPack">Montar uma alcateia para este projeto 🐺</button><button class="outline-button" id="resultProject">Salvar recomendação como projeto</button><button class="outline-button" id="resultCompare">Comparar para esta tarefa</button>'+(data.items.length?'<button class="outline-button" id="resultCard">Gerar cartão para compartilhar</button>':'')+'</div>'+window.NexusEvolution.feedbackForm(data));
     $('resultPlan').onclick=()=>{try{window.NexusEvolution.start(data.intent,data.pipeline.preferences);}catch(e){toast(e.message);}};
     $('resultProject').onclick=()=>window.NexusEvolution.capture(data);
     $('resultPack').onclick=()=>{if(window.NexusPack)window.NexusPack.pending=data.request;showWorkspace('pack');};
     $('resultCompare').onclick=()=>window.NexusWorkspace.compareTask(data);
+    if($('resultCard'))$('resultCard').onclick=()=>window.NexusShareCard?.open(data);
     window.NexusEvolution.bindFeedback(data);
     bindQuestions(data);
     const ci=$('compareInline');
@@ -265,6 +267,7 @@ else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();f
     if($('searchSuggestions'))$('searchSuggestions').hidden=true;
     const text=String(typeof query==='object'?query?.originalQuery:query||'').trim();
     if(!text){toast('Descreva primeiro o que você quer criar.');return;}
+    if(window.NexusMascot?.easterEgg?.(text))return;
     state.category=forcedCategory||'all';state.view='discover';$('taskInput').value=text;
     state.handoffPrompt=handoffPrompt||'';
     const chosen=forcedCategory||$('prefCategory')?.value||'all';

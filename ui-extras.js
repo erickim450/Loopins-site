@@ -23,6 +23,8 @@ function toggleTheme(){
 
 /* ── Novidades do próprio Loopins (sem notícias sobre ferramentas externas) ── */
 const news=[
+ {version:'6.2',date:'03/11/2026',items:['O Loopino cumprimenta pela hora do dia.','Truques escondidos: digite o nome do Loopino na busca… ou um uivo bem longo.','Cada categoria tem sua constelação no céu do topo.','Novo: Mapa das alcateias, com as 127 IAs agrupadas por área.','Novo: cartão de resultado para baixar e compartilhar.']},
+ {version:'6.1',date:'03/11/2026',items:['Salve seu apelido em Meu espaço e o Loopino passa a te chamar pelo nome.']},
  {version:'6.0',date:'03/11/2026',items:['O lobo guia ganhou nome: Loopino. Ele se apresenta quando você chega.','Um acessório para cada pedido: óculos para programação, fones para áudio, pincel para imagem, claquete para vídeo e capelo para estudo.','Roupa do dia em datas especiais, como o chapéu de festa no aniversário da Loopins.','No fim do telão rápido, o Loopino corre até o centro da tela e uiva para a lua.','Nova página “Conheça o Loopino”.']},
  {version:'5.9',date:'03/11/2026',items:['Telão rápido: no botão “Apresentar”, uma apresentação automática de 45 segundos em tela cheia.','O lobo guia agora corre enquanto você rola a página e senta quando você para.']},
  {version:'5.8',date:'03/11/2026',items:['56 IAs novas, todas conferidas em páginas oficiais: agora são 127 (Moises, Duolingo Max, OpusClip, Google AI Studio, Base44, Antigravity, SciSpace, Semantic Scholar, PixVerse, Hailuo, Tripo, Meta AI, Poe e muitas outras).','Novos tipos de pedido: separar a voz de uma música, aprender um idioma e transformar vídeo longo em cortes curtos.']},
@@ -45,6 +47,7 @@ function commands(){
   ...views.map(([label,id])=>({label:'Ir para: '+label,kind:'Tela',run:()=>id==='discover'?app().selectCategory('all'):app().showWorkspace(id)})),
   ...E.tools.map(t=>({label:t.name,detail:t.owner+' · '+(t.facts?.description||''),kind:'Ferramenta',run:()=>app().openPanel(t.id)})),
   {label:'Conheça o Loopino, o lobo guia',kind:'Tela',run:()=>app().showWorkspace('loopino')},
+  {label:'Mapa das alcateias',detail:'As IAs agrupadas por área, cada alcateia com seu líder',kind:'Tela',run:()=>app().showWorkspace('packmap')},
   {label:'Alternar tema claro/escuro',kind:'Ação',run:toggleTheme},
   {label:'Modo apresentação (passo a passo)',kind:'Ação',run:()=>startPresentation()},
   {label:'Telão rápido (≈45 s, tela cheia)',kind:'Ação',run:()=>startPresentation('quick')},
