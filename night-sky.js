@@ -55,6 +55,8 @@ function buildSky(){
   sky.innerHTML='<div class="aurora a1"></div><div class="aurora a2"></div><div class="aurora a3"></div><canvas class="sky-stars"></canvas><div class="sky-moon"><i></i><i></i><i></i></div>';
   sky.appendChild(constellation());
   main.prepend(sky);
+  // CSS antigo em cache (atualização recém-publicada)? Sem os estilos o céu ficaria quebrado: não mostra.
+  if(typeof getComputedStyle==='function'&&getComputedStyle(sky).position!=='absolute'){sky.remove();return;}
   starfield(sky.querySelector('canvas')).start();
 }
 
@@ -67,6 +69,7 @@ function buildMarquee(){
   const band=document.createElement('section');band.id='aiMarquee';band.className='ai-marquee';band.setAttribute('aria-label','Faixa com as '+tools.length+' IAs do catálogo');
   band.innerHTML='<p class="mq-title"><span>'+tools.length+'</span> IAs na alcateia</p><div aria-hidden="true">'+row(tools.filter((_,i)=>i%2===0),'mq-left')+row(tools.filter((_,i)=>i%2===1),'mq-right')+'</div><p class="sr-only">'+esc(tools.map(t=>t.name).join(', '))+'.</p>';
   hero.after(band);
+  if(typeof getComputedStyle==='function'&&getComputedStyle(band.querySelector('.mq-track')).display!=='flex')band.remove();
 }
 
 function init(){buildSky();buildMarquee();}

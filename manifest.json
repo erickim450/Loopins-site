@@ -1,8 +1,8 @@
 [
   {
     "file": "index.html",
-    "bytes": 21774,
-    "sha256": "7adbe23331d4c827c9cda76c1204900311645aae76efa1ff6e749aff200277cb"
+    "bytes": 22112,
+    "sha256": "2628d2b3aaeb4f3a7ce9bbe905d08080f209a91320740d94a16a346dc36ea0f6"
   },
   {
     "file": "manifest.webmanifest",
@@ -136,8 +136,8 @@
   },
   {
     "file": "night-sky.js",
-    "bytes": 6710,
-    "sha256": "b2b8c30c11aeb46b63cf12b0b1a29b5ab551c0d3f85d642db35942de4a4c785e"
+    "bytes": 7057,
+    "sha256": "e9440c32e3ba0ebada7ad8ef52bf644d2166eb2481ba0af904f9e9f06da8e798"
   },
   {
     "file": "ui-extras.js",
