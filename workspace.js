@@ -27,6 +27,7 @@ function show(which){view=which;const w=el('workspace');if(!w)return;
  if(view==='library')renderLibrary();
  if(view==='profile')renderProfile();
  if(['help','news','how'].includes(view))window.NexusExtras?.show(view);
+ if(view==='loopino')window.NexusMascot?.showPage();
  if(view==='galaxy')window.NexusGalaxy?.showView();
  if(view==='kit')window.NexusKit?.show();
  if(view==='pack'){const pre=window.NexusPack?.pending;if(window.NexusPack)window.NexusPack.pending=null;window.NexusPack?.show(pre);}
@@ -168,7 +169,7 @@ el('workspace').innerHTML=header('SEU ESPAÇO','Perfil e dados locais','Sem cont
 <label class="ws-field"><span>Plataforma</span><select name="platform"><option value="any">Qualquer</option><option value="web">Web</option><option value="desktop">Desktop</option></select></label></div>
 <label class="ws-checkbox"><input type="checkbox" name="offline"> Exigir modo offline confirmado</label>
 <h3>Aparência</h3><div class="ws-form-row"><label class="ws-field"><span>Tema</span><select name="theme"><option value="auto">Automático (sistema)</option><option value="dark">Escuro</option><option value="light">Claro</option></select></label><label class="ws-field"><span>Tamanho do texto</span><select name="fontScale"><option value="normal">Normal</option><option value="large">Maior</option></select></label></div>
-<h3>Efeitos</h3><label class="ws-checkbox"><input type="checkbox" name="sound"> Sons (abertura, uivo do lobo)</label><label class="ws-checkbox"><input type="checkbox" name="mascot"> Mostrar o lobo guia</label>
+<h3>Efeitos</h3><label class="ws-checkbox"><input type="checkbox" name="sound"> Sons (abertura, uivo do lobo)</label><label class="ws-checkbox"><input type="checkbox" name="mascot"> Mostrar o Loopino (lobo guia)</label>
 <button class="primary-button" type="submit">Salvar preferências</button></form></div>
 <div class="ws-block"><h2>IA externa (opcional)</h2><p id="aiProfileStatus" class="ws-help">Verificando…</p><label class="ws-checkbox"><input type="checkbox" id="aiInterpret"> Usar IA externa para sugerir a interpretação das minhas pesquisas</label><p class="ws-help">Quando ativado e disponível, o texto da pesquisa é enviado ao provedor indicado pelo servidor do Loopins. O ranking continua local. Chat, Studio e comparação integrada pedem confirmação a cada uso.</p></div>
 <div class="ws-block"><h2>Ferramentas que você abriu</h2><div id="toolUsage"></div><p class="ws-help">Contagem local de cliques em “Abrir site oficial”. Não sai do navegador.</p></div>

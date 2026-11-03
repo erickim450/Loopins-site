@@ -105,7 +105,7 @@ else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();f
   }
   function showRecommendations(data) {
     showBrowse();state.result=data;window.NexusGalaxy?.setHero(data);renderLiveIntent(data);
-    if(typeof CustomEvent==='function'&&document.dispatchEvent)document.dispatchEvent(new CustomEvent('loopins:results',{detail:{count:data.items.length,top:data.items[0]?.name||''}}));
+    if(typeof CustomEvent==='function'&&document.dispatchEvent)document.dispatchEvent(new CustomEvent('loopins:results',{detail:{count:data.items.length,top:data.items[0]?.name||'',family:data.category||data.intent?.taskFamily||''}}));
     $('sectionKicker').textContent=data.category === 'all' ? 'COMECE POR AQUI':'ESCOLHIDAS PARA SUA TAREFA';
     $('resultTitle').textContent=data.heading;
     $('resultsRationale').textContent=data.rationale;

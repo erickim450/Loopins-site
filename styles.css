@@ -444,3 +444,41 @@ html[data-theme="light"] .sky-wolf-line{stroke:var(--accent);opacity:.45}html[da
 .present-menu strong{font-size:13px}
 .present-menu span{font-size:11.5px;color:var(--muted)}
 body.presenting-quick .present-step{color:var(--cyan)}
+/* 6.0 — Loopino: acessórios por pedido, roupa do dia, telão e página */
+.wolf-guide .acc,.wolf-guide .outfit,.loopino-art .acc,.loopino-art .outfit{display:none}
+:is(.wolf-guide,.loopino-art)[data-gear="code"] .acc-code,:is(.wolf-guide,.loopino-art)[data-gear="audio"] .acc-audio,:is(.wolf-guide,.loopino-art)[data-gear="image"] .acc-image,:is(.wolf-guide,.loopino-art)[data-gear="video"] .acc-video,:is(.wolf-guide,.loopino-art)[data-gear="study"] .acc-study{display:inline;animation:loopinoPop .35s cubic-bezier(.3,1.6,.5,1)}
+:is(.wolf-guide,.loopino-art)[data-outfit="party"] .outfit-party,:is(.wolf-guide,.loopino-art)[data-outfit="xmas"] .outfit-xmas,:is(.wolf-guide,.loopino-art)[data-outfit="junina"] .outfit-junina,:is(.wolf-guide,.loopino-art)[data-outfit="winter"] .outfit-winter{display:inline}
+:is(.wolf-guide,.loopino-art):is([data-gear="audio"],[data-gear="study"]) .outfit-head{display:none!important}
+.wolf-guide .acc,.wolf-guide .outfit{transform-box:fill-box;transform-origin:50% 100%}
+@keyframes loopinoPop{0%{transform:scale(.2);opacity:0}100%{transform:scale(1);opacity:1}}
+.wolf-guide{transition:transform 1.3s cubic-bezier(.45,0,.2,1)}
+.wolf-guide .wolf-body{transition:transform 1.3s cubic-bezier(.45,0,.2,1);transform-origin:100% 100%}
+.wolf-guide.on-stage{transform:translate(calc(-50vw + 140px),-16vh)}
+.wolf-guide.on-stage .wolf-body{transform:scale(1.9)}
+.wolf-guide.on-stage .wolf-bubble{transform:translateY(-70px)}
+.wolf-guide.on-stage .wolf-hide{display:none}
+@media(max-width:760px){.wolf-guide.on-stage{transform:translate(calc(-50vw + 90px),-10vh)}}
+.loopino-art{display:inline-block;line-height:0}
+.loopino-art svg{width:100%;height:100%;overflow:visible}
+.loopino-art .m-hind,.loopino-art .m-speed,.loopino-art .m-dust{display:none}
+.loopino-art .m-mouth{opacity:0}
+.loopino-art.big{width:190px;height:190px;flex:none;filter:drop-shadow(0 14px 30px rgba(120,110,255,.35))}
+.loopino-art.big .m-body{animation:wolfBreath 3.2s ease-in-out infinite;transform-origin:50px 94px}
+.loopino-art.big .m-tail{animation:wolfWag 2.6s ease-in-out infinite;transform-origin:33px 80px}
+.loopino-art.small{width:92px;height:92px}
+.loopino-hero{display:flex;gap:28px;align-items:center}
+.loopino-hero h2{margin-top:0}
+.loopino-hero p{line-height:1.7;color:var(--muted)}
+.loopino-hero p strong,.loopino-hero p em{color:var(--text)}
+.loopino-today{padding:10px 12px;border-radius:10px;background:var(--panel-soft);border:1px solid var(--line)}
+.loopino-howl{width:auto;margin-top:6px}
+.loopino-list{margin:0;padding-left:20px;line-height:1.9;color:var(--muted)}
+.loopino-grid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.loopino-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:14px 10px;border:1px solid var(--line);border-radius:14px;background:var(--panel-soft)}
+.loopino-card strong{font-size:13px}
+.loopino-card span{font-size:11.5px;color:var(--muted);line-height:1.45}
+.loopino-card.is-today{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+@media(max-width:600px){.loopino-hero{flex-direction:column;text-align:center}.loopino-art.big{width:150px;height:150px}}
+@media(prefers-reduced-motion:reduce){.wolf-guide,.wolf-guide .wolf-body{transition:none}}
+/* A faixa de IAs pertence à página inicial: some junto com a busca nas outras telas. */
+#heroSection[hidden]+.ai-marquee{display:none}

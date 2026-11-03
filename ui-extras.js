@@ -23,6 +23,7 @@ function toggleTheme(){
 
 /* ── Novidades do próprio Loopins (sem notícias sobre ferramentas externas) ── */
 const news=[
+ {version:'6.0',date:'03/11/2026',items:['O lobo guia ganhou nome: Loopino. Ele se apresenta quando você chega.','Um acessório para cada pedido: óculos para programação, fones para áudio, pincel para imagem, claquete para vídeo e capelo para estudo.','Roupa do dia em datas especiais, como o chapéu de festa no aniversário da Loopins.','No fim do telão rápido, o Loopino corre até o centro da tela e uiva para a lua.','Nova página “Conheça o Loopino”.']},
  {version:'5.9',date:'03/11/2026',items:['Telão rápido: no botão “Apresentar”, uma apresentação automática de 45 segundos em tela cheia.','O lobo guia agora corre enquanto você rola a página e senta quando você para.']},
  {version:'5.8',date:'03/11/2026',items:['56 IAs novas, todas conferidas em páginas oficiais: agora são 127 (Moises, Duolingo Max, OpusClip, Google AI Studio, Base44, Antigravity, SciSpace, Semantic Scholar, PixVerse, Hailuo, Tripo, Meta AI, Poe e muitas outras).','Novos tipos de pedido: separar a voz de uma música, aprender um idioma e transformar vídeo longo em cortes curtos.']},
  {version:'5.7',date:'03/11/2026',items:['Céu da alcateia no topo: aurora em movimento, lua, estrelas cadentes e um lobo feito de estrelas uivando para a lua.','Faixa com todas as IAs do catálogo passando abaixo da busca.']},
@@ -43,6 +44,7 @@ function commands(){
  return [
   ...views.map(([label,id])=>({label:'Ir para: '+label,kind:'Tela',run:()=>id==='discover'?app().selectCategory('all'):app().showWorkspace(id)})),
   ...E.tools.map(t=>({label:t.name,detail:t.owner+' · '+(t.facts?.description||''),kind:'Ferramenta',run:()=>app().openPanel(t.id)})),
+  {label:'Conheça o Loopino, o lobo guia',kind:'Tela',run:()=>app().showWorkspace('loopino')},
   {label:'Alternar tema claro/escuro',kind:'Ação',run:toggleTheme},
   {label:'Modo apresentação (passo a passo)',kind:'Ação',run:()=>startPresentation()},
   {label:'Telão rápido (≈45 s, tela cheia)',kind:'Ação',run:()=>startPresentation('quick')},
@@ -206,7 +208,7 @@ function startPresentation(mode='full'){
  if(window.NexusIntro)window.NexusIntro.play(go);else go();
 }
 function runDemo(){
- clearDemoTimers();
+ clearDemoTimers();window.NexusMascot?.stage(false);
  const list=script(),step=list[demoIndex],input=$('taskInput'),wait=step.ms||(step.pack?14000:12000);
  $('presentStep').textContent=(demoMode==='quick'?'Telão · ':'')+(demoIndex+1)+' de '+list.length;$('presentNote').textContent=step.note;
  $('presentPrev').disabled=demoIndex===0;$('presentNext').textContent=demoIndex===list.length-1?'Recomeçar':'Próximo →';
@@ -230,11 +232,11 @@ function finishQuick(){
  window.scrollTo({top:0,behavior:reduced()?'auto':'smooth'});
  $('presentStep').textContent='Telão · fim';$('presentNote').textContent='Esse foi o Loopins: a IA certa para cada ideia. Agora é com vocês!';
  $('presentNext').textContent='Recomeçar';$('presentPause').textContent='Pausar';$('presentPause').disabled=true;
- if(window.NexusMascot){window.NexusMascot.setState('howl',2200);window.NexusMascot.say('Auuu! Obrigado por assistirem!',5000);if(!reduced())window.NexusSound?.play('mascot');}
+ window.NexusMascot?.stage(true);
 }
 function prevDemo(){if(demoIndex>0){demoIndex--;runDemo();}}
 function togglePause(){demoPlaying=!demoPlaying;$('presentPause').textContent=demoPlaying?'Pausar':'Continuar';if(!demoPlaying)clearTimeout(demoTimer);else if(!typeTimer)demoTimer=setTimeout(nextDemo,4000);}
-function stopPresentation(){clearDemoTimers();document.body.classList.remove('presenting','presenting-quick');$('presentBar').hidden=true;if(document.fullscreenElement)document.exitFullscreen?.().catch(()=>{});$('presentOpen')?.focus();}
+function stopPresentation(){clearDemoTimers();window.NexusMascot?.stage(false);document.body.classList.remove('presenting','presenting-quick');$('presentBar').hidden=true;if(document.fullscreenElement)document.exitFullscreen?.().catch(()=>{});$('presentOpen')?.focus();}
 /* Menu do botão “Apresentar”: telão rápido ou passo a passo. */
 function buildPresentMenu(){
  const btn=$('presentOpen');if(!btn||$('presentMenu'))return;
