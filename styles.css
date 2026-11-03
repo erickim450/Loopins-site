@@ -409,3 +409,38 @@ html[data-theme="light"] .sky-stars{display:none}html[data-theme="light"] .auror
 html[data-theme="light"] .sky-wolf-line{stroke:var(--accent);opacity:.45}html[data-theme="light"] .sky-wolf-star{fill:var(--accent);filter:none}html[data-theme="light"] .sky-howl{stroke:var(--accent)}
 @media(max-width:760px){.night-sky{height:420px}.sky-wolf{width:118px;right:calc(clamp(24px,5vw,70px) + 2%);top:46px;opacity:.6}.sky-moon{width:44px;height:44px;top:4px;right:calc(clamp(24px,5vw,70px) + 1%)}.sky-moon i{display:none}.ai-marquee{margin-top:34px}.mq-chip{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.sky-wolf-line{stroke-dashoffset:0}.sky-wolf-shape{opacity:.16}.mq-track{animation:none!important}}
+/* 5.9 — Lobo guia corre enquanto a página rola e senta quando ela para */
+.wolf-guide .m-all{transform-origin:50px 92px}
+.wolf-guide .m-leg{transform-box:fill-box;transform-origin:50% 8%}
+.wolf-guide .m-hind,.wolf-guide .m-speed,.wolf-guide .m-dust{opacity:0;transition:opacity .15s}
+.wolf-guide .m-speed{stroke:#7ae6de;stroke-width:2.4;stroke-linecap:round}
+.wolf-guide .m-dust{fill:rgba(170,175,230,.55)}
+.wolf-guide[data-state="run"] .m-all{animation:wolfGallop .34s ease-in-out infinite}
+.wolf-guide[data-state="run"] .m-hind,.wolf-guide[data-state="run"] .m-speed,.wolf-guide[data-state="run"] .m-dust{opacity:1}
+.wolf-guide[data-state="run"] .m-leg1,.wolf-guide[data-state="run"] .m-leg3{animation:wolfLegA .34s ease-in-out infinite}
+.wolf-guide[data-state="run"] .m-leg2,.wolf-guide[data-state="run"] .m-leg4{animation:wolfLegB .34s ease-in-out infinite}
+.wolf-guide[data-state="run"] .m-tail{animation:none;transform:rotate(-38deg)}
+.wolf-guide[data-state="run"] .m-head{transform:rotate(8deg) translate(2px,2px)}
+.wolf-guide[data-state="run"] .m-speed line{animation:wolfSpeed .34s linear infinite}
+.wolf-guide[data-state="run"] .m-speed line:nth-child(2){animation-delay:-.11s}
+.wolf-guide[data-state="run"] .m-speed line:nth-child(3){animation-delay:-.22s}
+.wolf-guide[data-state="run"] .m-dust circle{animation:wolfDust .5s ease-out infinite}
+.wolf-guide[data-state="run"] .m-dust circle:nth-child(2){animation-delay:-.2s}
+.wolf-guide[data-state="run"] .m-dust circle:nth-child(3){animation-delay:-.35s}
+.wolf-guide[data-state="sit"] .m-all{animation:wolfSit .7s cubic-bezier(.3,1.5,.5,1)}
+.wolf-guide[data-dir="up"]:is([data-state="run"],[data-state="sit"]) .wolf-body svg{transform:scaleX(-1)}
+@keyframes wolfGallop{0%,100%{transform:translateY(0) rotate(7deg)}50%{transform:translateY(-7px) rotate(11deg)}}
+@keyframes wolfLegA{0%,100%{transform:rotate(32deg)}50%{transform:rotate(-30deg)}}
+@keyframes wolfLegB{0%,100%{transform:rotate(-30deg)}50%{transform:rotate(32deg)}}
+@keyframes wolfSpeed{0%{transform:translateX(6px);opacity:0}30%{opacity:1}100%{transform:translateX(-10px);opacity:0}}
+@keyframes wolfDust{0%{transform:translate(0,0) scale(.6);opacity:.9}100%{transform:translate(-12px,-6px) scale(1.4);opacity:0}}
+@keyframes wolfSit{0%{transform:translateY(-6px) rotate(8deg)}55%{transform:translateY(3px) scaleY(.92)}100%{transform:none}}
+/* 5.9 — Menu do botão Apresentar e telão rápido */
+.present-anchor{position:relative}
+.present-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:60;min-width:260px;display:flex;flex-direction:column;gap:4px;padding:6px;border:1px solid var(--line-strong);border-radius:14px;background:var(--panel-raised);box-shadow:var(--shadow);animation:chipIn .18s ease-out}
+.present-menu[hidden]{display:none}
+.present-menu button{display:flex;flex-direction:column;gap:3px;text-align:left;padding:10px 12px;border:0;border-radius:10px;background:transparent;color:var(--text)}
+.present-menu button:hover,.present-menu button:focus-visible{background:var(--panel-soft)}
+.present-menu strong{font-size:13px}
+.present-menu span{font-size:11.5px;color:var(--muted)}
+body.presenting-quick .present-step{color:var(--cyan)}

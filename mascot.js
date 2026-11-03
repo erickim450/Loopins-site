@@ -17,10 +17,14 @@ const tips=[
 ];
 const SVG='<svg viewBox="0 0 100 100" aria-hidden="true">'+
  '<defs><linearGradient id="mgBody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b18dff"/><stop offset="1" stop-color="#58dccd"/></linearGradient></defs>'+
+ '<g class="m-speed"><line x1="2" y1="58" x2="16" y2="58"/><line x1="-6" y1="70" x2="10" y2="70"/><line x1="4" y1="83" x2="18" y2="83"/></g>'+
+ '<g class="m-dust"><circle cx="38" cy="95" r="3.2"/><circle cx="56" cy="96" r="2.4"/><circle cx="46" cy="97" r="1.8"/></g>'+
+ '<g class="m-all">'+
+ '<g class="m-hind"><rect class="m-leg m-leg3" x="33" y="76" width="6" height="18" rx="3" fill="#6d6ad8"/><rect class="m-leg m-leg4" x="41" y="76" width="6" height="18" rx="3" fill="#6d6ad8"/></g>'+
  '<g class="m-tail"><path d="M32 82 C18 80 10 70 12 56 C18 66 24 70 34 72 Z" fill="url(#mgBody)"/></g>'+
  '<path class="m-body" d="M30 94 C26 72 34 54 50 50 C66 48 72 66 70 94 Z" fill="url(#mgBody)"/>'+
  '<path d="M46 60 C52 66 58 66 62 58 L62 82 C56 84 50 84 46 80 Z" fill="#fff" opacity=".35"/>'+
- '<rect x="52" y="76" width="6" height="18" rx="3" fill="#7c79e6"/><rect x="61" y="76" width="6" height="18" rx="3" fill="#7c79e6"/>'+
+ '<rect class="m-leg m-leg1" x="52" y="76" width="6" height="18" rx="3" fill="#7c79e6"/><rect class="m-leg m-leg2" x="61" y="76" width="6" height="18" rx="3" fill="#7c79e6"/>'+
  '<g class="m-head">'+
   '<path class="m-ear" d="M42 32 L44 12 L54 26 Z" fill="#8b7cff"/><path class="m-ear m-ear2" d="M56 26 L64 10 L68 30 Z" fill="#8b7cff"/>'+
   '<circle cx="55" cy="36" r="15" fill="url(#mgBody)"/>'+
@@ -28,7 +32,7 @@ const SVG='<svg viewBox="0 0 100 100" aria-hidden="true">'+
   '<circle cx="79" cy="40" r="2.6" fill="#1b1f33"/>'+
   '<ellipse class="m-eye" cx="58" cy="32" rx="2.2" ry="2.4" fill="#1b1f33"/>'+
   '<ellipse class="m-mouth" cx="72" cy="47" rx="3" ry="2.2" fill="#1b1f33"/>'+
- '</g></svg>';
+ '</g></g></svg>';
 let state='idle',idleTimer=null,stateTimer=null,tipIndex=0,bubbleTimer=null;
 function setState(s,ms){
   const el=$('wolfGuide');if(!el)return;
@@ -59,6 +63,16 @@ function init(){
     else{setState('sad',2200);say('Hmm… nenhuma IA tem tudo isso confirmado. Tente tirar uma restrição.');}
   });
   ['pointerdown','keydown','scroll'].forEach(ev=>document.addEventListener(ev,()=>{if(state==='sleep'){setState('idle');const b=$('wolfBubble');if(b)b.hidden=true;}else resetIdle();},{passive:true}));
+  // Corre enquanto a página rola (virado para o sentido da rolagem) e senta quando ela para.
+  let lastY=window.scrollY,runStop=null;
+  window.addEventListener('scroll',()=>{
+    const el=$('wolfGuide'),y=window.scrollY,dy=y-lastY;lastY=y;
+    if(!el||el.hidden||reduced()||state==='howl'||Math.abs(dy)<2)return;
+    el.dataset.dir=dy>0?'down':'up';
+    if(state!=='run'){clearTimeout(stateTimer);el.dataset.state='run';state='run';}
+    clearTimeout(runStop);runStop=setTimeout(()=>{if(state==='run')setState('sit',800);},260);
+    resetIdle();
+  },{passive:true});
   // Pisca de vez em quando.
   setInterval(()=>{const el=$('wolfGuide');if(!el||reduced()||state==='sleep')return;el.classList.add('blink');setTimeout(()=>el.classList.remove('blink'),160);},4200);
   resetIdle();

@@ -23,6 +23,7 @@ function toggleTheme(){
 
 /* ── Novidades do próprio Loopins (sem notícias sobre ferramentas externas) ── */
 const news=[
+ {version:'5.9',date:'03/11/2026',items:['Telão rápido: no botão “Apresentar”, uma apresentação automática de 45 segundos em tela cheia.','O lobo guia agora corre enquanto você rola a página e senta quando você para.']},
  {version:'5.8',date:'03/11/2026',items:['56 IAs novas, todas conferidas em páginas oficiais: agora são 127 (Moises, Duolingo Max, OpusClip, Google AI Studio, Base44, Antigravity, SciSpace, Semantic Scholar, PixVerse, Hailuo, Tripo, Meta AI, Poe e muitas outras).','Novos tipos de pedido: separar a voz de uma música, aprender um idioma e transformar vídeo longo em cortes curtos.']},
  {version:'5.7',date:'03/11/2026',items:['Céu da alcateia no topo: aurora em movimento, lua, estrelas cadentes e um lobo feito de estrelas uivando para a lua.','Faixa com todas as IAs do catálogo passando abaixo da busca.']},
  {version:'5.6',date:'03/11/2026',items:['Monte sua alcateia: projetos grandes viram uma alcateia de IAs, cada uma com um papel, correndo em formação.','Lobo guia: um mascote que fica atento quando você digita, uiva quando encontra IAs e dá dicas.','Sons gerados no navegador: trilha e uivo na abertura, uivo do lobo guia; liga e desliga em Meu espaço.']},
@@ -43,7 +44,8 @@ function commands(){
   ...views.map(([label,id])=>({label:'Ir para: '+label,kind:'Tela',run:()=>id==='discover'?app().selectCategory('all'):app().showWorkspace(id)})),
   ...E.tools.map(t=>({label:t.name,detail:t.owner+' · '+(t.facts?.description||''),kind:'Ferramenta',run:()=>app().openPanel(t.id)})),
   {label:'Alternar tema claro/escuro',kind:'Ação',run:toggleTheme},
-  {label:'Modo apresentação',kind:'Ação',run:()=>startPresentation()},
+  {label:'Modo apresentação (passo a passo)',kind:'Ação',run:()=>startPresentation()},
+  {label:'Telão rápido (≈45 s, tela cheia)',kind:'Ação',run:()=>startPresentation('quick')},
   {label:'Favoritos',kind:'Tela',run:()=>app().renderFavorites()},{label:'Histórico',kind:'Tela',run:()=>app().renderHistory()}
  ];
 }
@@ -112,7 +114,7 @@ function init(){
  applyTheme();
  if(typeof matchMedia==='function')matchMedia('(prefers-color-scheme: light)').addEventListener?.('change',applyTheme);
  $('themeToggle')?.addEventListener('click',toggleTheme);
- $('presentOpen')?.addEventListener('click',startPresentation);
+ buildPresentMenu();
  const soundBtn=$('presentSound'),syncSound=()=>{if(!soundBtn)return;const on=window.NexusSettings?.read().sound!==false;soundBtn.textContent='Som: '+(on?'ligado':'desligado');soundBtn.setAttribute('aria-pressed',String(on));};
  soundBtn?.addEventListener('click',()=>{try{window.NexusSettings.update(s=>{s.sound=s.sound===false;});}catch(_){/* sem armazenamento */}if(window.NexusSettings?.read().sound===false)window.NexusSound?.stop();syncSound();});syncSound();
  $('presentNext')?.addEventListener('click',nextDemo);$('presentPrev')?.addEventListener('click',prevDemo);$('presentPause')?.addEventListener('click',togglePause);$('presentExit')?.addEventListener('click',stopPresentation);
@@ -185,33 +187,70 @@ const demo=[
  {q:'ferramentas que geram SVG',note:'Busca por funcionalidade: lista todas as ferramentas com a capacidade confirmada.'},
  {q:'Quero criar um jogo de plataforma com música própria, um trailer e um logotipo',pack:true,note:'Projeto grande? O Loopins monta uma alcateia: o líder planeja e cada lobo é uma IA com um papel — construtor, artista, músico, diretor de vídeo.'}
 ];
-let demoIndex=0,demoTimer=null,typeTimer=null,demoPlaying=true;
+// Telão rápido (≈45 s): os momentos mais marcantes, uma vez só, em tela cheia.
+const quickDemo=[
+ {q:'Quero criar um site sem saber programar',ms:7500,note:'Das 127 IAs, só ficam acesas as que constroem sites sem código; as 3 melhores vão para o centro.'},
+ {q:'Quero programar um assistente virtual que responda por voz no computador',ms:7500,note:'A voz é um recurso do programa: o Loopins indica IAs de programação, não geradores de voz.'},
+ {q:'Quero tirar a voz de uma música para fazer karaokê',ms:6500,note:'Pedido diferente, especialista diferente: separar a voz da música.'},
+ {q:'Quero criar um jogo de plataforma com música própria, um trailer e um logotipo',pack:true,ms:10000,note:'Projeto grande vira uma alcateia: cada lobo é uma IA com um papel.'}
+];
+let demoIndex=0,demoTimer=null,typeTimer=null,demoPlaying=true,demoMode='full';
+const script=()=>demoMode==='quick'?quickDemo:demo;
 const reduced=()=>typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 function clearDemoTimers(){clearTimeout(demoTimer);clearInterval(typeTimer);demoTimer=typeTimer=null;}
-function startPresentation(){
- app().closePanel?.();if(!$('tourBox').hidden)endTour();
- const go=()=>{document.body.classList.add('presenting');$('presentBar').hidden=false;app().selectCategory('all');demoIndex=0;demoPlaying=true;runDemo();};
+function startPresentation(mode='full'){
+ app().closePanel?.();if(!$('tourBox').hidden)endTour();closePresentMenu();
+ demoMode=mode==='quick'?'quick':'full';
+ if(demoMode==='quick'&&!document.fullscreenElement)document.documentElement.requestFullscreen?.().catch(()=>{/* navegador recusou: segue sem tela cheia */});
+ const go=()=>{document.body.classList.add('presenting');document.body.classList.toggle('presenting-quick',demoMode==='quick');$('presentBar').hidden=false;app().selectCategory('all');demoIndex=0;demoPlaying=true;runDemo();};
  if(window.NexusIntro)window.NexusIntro.play(go);else go();
 }
 function runDemo(){
  clearDemoTimers();
- const step=demo[demoIndex],input=$('taskInput');
- $('presentStep').textContent=(demoIndex+1)+' de '+demo.length;$('presentNote').textContent=step.note;
- $('presentPrev').disabled=demoIndex===0;$('presentNext').textContent=demoIndex===demo.length-1?'Recomeçar':'Próximo →';
- $('presentPause').textContent=demoPlaying?'Pausar':'Continuar';
+ const list=script(),step=list[demoIndex],input=$('taskInput'),wait=step.ms||(step.pack?14000:12000);
+ $('presentStep').textContent=(demoMode==='quick'?'Telão · ':'')+(demoIndex+1)+' de '+list.length;$('presentNote').textContent=step.note;
+ $('presentPrev').disabled=demoIndex===0;$('presentNext').textContent=demoIndex===list.length-1?'Recomeçar':'Próximo →';
+ $('presentPause').textContent=demoPlaying?'Pausar':'Continuar';$('presentPause').disabled=false;
  const finish=()=>{app().submitSearch(step.q);if(step.open)setTimeout(()=>document.querySelector(step.open)?.setAttribute('open',''),50);
-  ($('galaxyStage')||$('resultSection')).scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'});if(demoPlaying)demoTimer=setTimeout(nextDemo,12000);};
- if(step.pack){window.NexusPack.pending=step.q;app().showWorkspace('pack');if(demoPlaying)demoTimer=setTimeout(nextDemo,14000);return;}
+  ($('galaxyStage')||$('resultSection')).scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'});if(demoPlaying)demoTimer=setTimeout(()=>nextDemo(true),wait);};
+ if(step.pack){window.NexusPack.pending=step.q;app().showWorkspace('pack');if(demoPlaying)demoTimer=setTimeout(()=>nextDemo(true),wait);return;}
  if($('heroSection').hidden)app().selectCategory('all');
  window.scrollTo({top:0,behavior:'auto'});
  if(reduced()){input.value=step.q;finish();return;}
  input.value='';let i=0;
- typeTimer=setInterval(()=>{input.value=step.q.slice(0,++i);if(i>=step.q.length){clearInterval(typeTimer);typeTimer=null;demoTimer=setTimeout(finish,500);}},35);
+ typeTimer=setInterval(()=>{input.value=step.q.slice(0,++i);if(i>=step.q.length){clearInterval(typeTimer);typeTimer=null;demoTimer=setTimeout(finish,500);}},demoMode==='quick'?24:35);
 }
-function nextDemo(){demoIndex=(demoIndex+1)%demo.length;runDemo();}
+function nextDemo(auto){
+ // O telão roda uma vez só e termina no céu da página inicial; "Recomeçar" volta ao início.
+ if(auto===true&&demoMode==='quick'&&demoIndex===quickDemo.length-1){finishQuick();return;}
+ demoPlaying=true;demoIndex=(demoIndex+1)%script().length;runDemo();
+}
+function finishQuick(){
+ clearDemoTimers();demoPlaying=false;app().selectCategory('all');const input=$('taskInput');input.value='';input.dispatchEvent(new Event('input',{bubbles:true}));
+ window.scrollTo({top:0,behavior:reduced()?'auto':'smooth'});
+ $('presentStep').textContent='Telão · fim';$('presentNote').textContent='Esse foi o Loopins: a IA certa para cada ideia. Agora é com vocês!';
+ $('presentNext').textContent='Recomeçar';$('presentPause').textContent='Pausar';$('presentPause').disabled=true;
+ if(window.NexusMascot){window.NexusMascot.setState('howl',2200);window.NexusMascot.say('Auuu! Obrigado por assistirem!',5000);if(!reduced())window.NexusSound?.play('mascot');}
+}
 function prevDemo(){if(demoIndex>0){demoIndex--;runDemo();}}
 function togglePause(){demoPlaying=!demoPlaying;$('presentPause').textContent=demoPlaying?'Pausar':'Continuar';if(!demoPlaying)clearTimeout(demoTimer);else if(!typeTimer)demoTimer=setTimeout(nextDemo,4000);}
-function stopPresentation(){clearDemoTimers();document.body.classList.remove('presenting');$('presentBar').hidden=true;$('presentOpen')?.focus();}
+function stopPresentation(){clearDemoTimers();document.body.classList.remove('presenting','presenting-quick');$('presentBar').hidden=true;if(document.fullscreenElement)document.exitFullscreen?.().catch(()=>{});$('presentOpen')?.focus();}
+/* Menu do botão “Apresentar”: telão rápido ou passo a passo. */
+function buildPresentMenu(){
+ const btn=$('presentOpen');if(!btn||$('presentMenu'))return;
+ const menu=document.createElement('div');menu.id='presentMenu';menu.className='present-menu';menu.setAttribute('role','menu');menu.hidden=true;
+ menu.innerHTML='<button type="button" role="menuitem" data-mode="quick"><strong>Telão rápido</strong><span>≈45 s, tela cheia, roda sozinho uma vez</span></button><button type="button" role="menuitem" data-mode="full"><strong>Passo a passo</strong><span>9 exemplos; você avança e pausa</span></button>';
+ btn.setAttribute('aria-haspopup','menu');btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-controls','presentMenu');
+ btn.insertAdjacentElement('afterend',menu);btn.parentElement.classList.add('present-anchor');
+ btn.addEventListener('click',e=>{e.stopPropagation();menu.hidden?openPresentMenu():closePresentMenu();});
+ menu.addEventListener('click',e=>{const b=e.target.closest('[data-mode]');if(b)startPresentation(b.dataset.mode);});
+ menu.addEventListener('keydown',e=>{const items=[...menu.querySelectorAll('button')],i=items.indexOf(document.activeElement);
+  if(e.key==='Escape'){e.preventDefault();closePresentMenu();btn.focus();}
+  else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();items[(i+(e.key==='ArrowDown'?1:items.length-1))%items.length].focus();}});
+ document.addEventListener('click',e=>{if(!menu.hidden&&!menu.contains(e.target))closePresentMenu();});
+}
+function openPresentMenu(){const m=$('presentMenu');if(!m)return;m.hidden=false;$('presentOpen').setAttribute('aria-expanded','true');m.querySelector('button')?.focus();}
+function closePresentMenu(){const m=$('presentMenu');if(!m||m.hidden)return;m.hidden=true;$('presentOpen')?.setAttribute('aria-expanded','false');}
 const presenting=()=>document.body.classList.contains('presenting');
 window.NexusExtras={show:view=>view==='help'?showHelp():view==='news'?showNews():view==='how'?showHow():null,startPresentation,stopPresentation,applyTheme,toggleTheme,openPalette,startTour,news};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();

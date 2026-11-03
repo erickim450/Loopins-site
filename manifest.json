@@ -2,7 +2,7 @@
   {
     "file": "index.html",
     "bytes": 22112,
-    "sha256": "0f98682c3fd4ee9d63b7a1871ec35ea2b3dd5068236bb14d81d2f1c3ab4869a8"
+    "sha256": "09570abce0864295561d4202a5c9a1c1a2b379d31e7193a58e148486b7555a41"
   },
   {
     "file": "manifest.webmanifest",
@@ -16,8 +16,8 @@
   },
   {
     "file": "styles.css",
-    "bytes": 67205,
-    "sha256": "855225fec9292e66d18d556c28f1af075568b87f157b47738ba80a5a01c07584"
+    "bytes": 70393,
+    "sha256": "a2ef5a0ffb6f673b36cdb21c76b51632dc5e41d4326d2c01fda4c47b4ce08e64"
   },
   {
     "file": "catalog-facts.js",
@@ -131,8 +131,8 @@
   },
   {
     "file": "mascot.js",
-    "bytes": 5284,
-    "sha256": "ce13ff7ce429516c60d6846c958fcbcd4289df03b01611ff4edf439bc0a2fdea"
+    "bytes": 6389,
+    "sha256": "8dfde9ba7d97fb3101aab806ef63e0799f398c98bc59cf5589fdfbef344171bc"
   },
   {
     "file": "night-sky.js",
@@ -141,8 +141,8 @@
   },
   {
     "file": "ui-extras.js",
-    "bytes": 25869,
-    "sha256": "8bd25fb13ce0796c49b6e72fcae4b5e1eb2343fb3d441346c4396080f3c7ae8d"
+    "bytes": 30334,
+    "sha256": "2ee60df2d63c427e6c4500ca1f7256edc9811596f9271b4e9b12d0b7fac5371f"
   },
   {
     "file": "robots.txt",
